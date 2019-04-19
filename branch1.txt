@@ -1,8 +1,0 @@
-commit branch1 no 1
-commit branch1 no 2 from server
-<<<<<<< HEAD
-commit 88888
-dsadsadsa
-=======
-commit branch1 no 3 from server
->>>>>>> 620e809c95133148c25120a5758b04c465514f95
