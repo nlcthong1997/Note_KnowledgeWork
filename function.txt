@@ -1,0 +1,41 @@
+// tính khoảng cách dựa vào tọa độ của MAP
+
+--------- Javascrip --------------
+<script type="text/javascript">
+	function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+		var R = 6371; // Radius of the earth in km
+		var dLat = deg2rad(lat2-lat1);  // deg2rad below
+		var dLon = deg2rad(lon2-lon1);
+		var a =
+			Math.sin(dLat/2) * Math.sin(dLat/2) +
+			Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+			Math.sin(dLon/2) * Math.sin(dLon/2)
+		;
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		var d = R * c; // Distance in km
+		return d;
+	}
+
+	function deg2rad(deg) {
+		return deg * (Math.PI/180)
+	}
+	getDistanceFromLatLonInKm(var, var, var, var);
+	
+</script>
+
+
+--------- PHP -------------------
+public function getDistanceFromLatLonInKm($lat1 = null, $lon1 = null, $lat2 = null, $lon2 = null)
+{
+	// hàm deg2rad php có hỗ trợ sẵn
+	if (!$lat1 || !$lon1 || !$lat2 || !$lon2) {
+		return 0;
+	}
+	$R = 6371; // Radius of the earth in km
+	$delta_lat = deg2rad($lat2 - $lat1);
+	$delta_lon = deg2rad($lon2 - $lon1);
+	$a = sin($delta_lat / 2) * sin($delta_lat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($delta_lon / 2) * sin($delta_lon / 2);
+	$c = 2 * asin(min(1, sqrt($a)));
+	$d = $R * $c; // Distance in km
+	return $d;
+}

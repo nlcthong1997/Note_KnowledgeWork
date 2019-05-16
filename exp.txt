@@ -1,0 +1,64 @@
+---------Use git---------------------
+
+// quy trình làm việc cơ bản của git
+
+	WORKING DIRECTORY(1) ==add==> INDEX(2) ==commit==> HEAD(3) ==push==> REPOSISTORIES(4)
+
+(1): thư mục làm việc dưới máy local chứa các tập tin hiện tại (máy cá nhân)
+
+//khi muốn đẩy những thay đổi dưới local lên remote
+(2): các thay đổi được lưu vào đây trước
+(3): sau đó được đẩy vào head
+(4): cuối cùng là đẩy lên remote
+
+// lấy source về máy local
+- $ git clone 'đường dẫn source trên repo remote'
+
+// đăng nhập
+- $ git config user.email "username@gmail.com"
+
+// tạo nhánh -> chuyển qua nhánh vừa tạo
+- $ git branch <name_branch>
+- $ git checkout <name_branch>
+
+// tạo nhánh và chuyển qua nhánh đó luôn
+- $ git checkout -b <name_branch>
+
+// chuyển qua nhánh mới trên origin nhưng dưới local chưa có (thay vì tạo 1 nhánh ở local rồi pull code về)
+- $ git checkout --track origin/<name_branch>
+
+// kiểm tra những thay đổi dưới local (WORKING DIRECTORY)
+- $ git status
+
+// thêm từng file được thay đổi vào INDEX
+- $ git add <path/name_file> <path/name_file> ...
+
+// thêm tất cả các file được thay đổi vào INDEX
+- $ git git add *
+
+// đẩy những thay đổi vào HEAD
+- $ git commit -m"ghi chú cho commit"
+
+// đây những thay đổi lên remote
+- $ git push origin <name_branch>
+
+// lấy nhưng thay đổi từ remote về local
+- $ git pull origin <name_branch>
+
+// kiểm tra những thay đổi trên tất cả các nhánh trên remote
+- $ git fetch --all -p
+
+// lưu lại những thay đổi đang làm vào hàng đợi(vd: đang làm nhưng phải chuyển nhánh, nhưng chưa muốn cmit)
+- $ git stash
+
+// lấy lại những thay đổi đang làm từ hàng đợi
+- $ git stash pop
+
+// xóa nhánh dưới local
+- $ git branch -d <name_branch>
+
+// xóa nhánh trên remote
+- $ git push origin --delete <name_branch>
+
+// update những thay đổi từ nhánh khác về nhánh đang làm
+- $ git merge <name_branch>
