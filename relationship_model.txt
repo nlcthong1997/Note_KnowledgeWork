@@ -1,0 +1,63 @@
+----------------Laravel-----------
+
+- hasOne (có một, quan hệ 1 - 1)
+	vd:
+	class User extends Model
+	{
+		// Lấy bản ghi Phone liên quan đến User.
+		public function phone()
+		{
+			// local_key: khóa chính của bảng User
+			// foreign_key: khóa ngoại của bảng Phone
+			return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
+		}
+	}
+	// Lấy ra điện thoại của user có id = 1;
+	$phone = User::find(1)->phone;
+
+
+- belongsTo (thuộc về , nghịch đảo của hasOne)
+	vd: 
+	class Phone extends Model
+	{
+		// Lấy bản ghi User sở hữu Phone
+		public function user()
+		{
+			// other_key: khóa chính của bảng User.
+			// foreign_key: khóa ngoại của bảng Phone
+			return $this->belongsTo('App\User', 'foreign_key', 'other_key');
+		}
+	}
+	
+- hasMany (có nhiều, quan hệ 1 - n)
+	vd: một bài Post có nhiều Comment
+	class Post extends Model
+	{
+		// lấy những comments của bài Post
+		public function comments()
+		{
+			// local_key: khóa chính của bảng Comment
+			// foreign_key: khóa ngoại của bảng Post
+			return $this->hasManyreturn $this->hasMany('App\Comment', 'foreign_key', 'local_key');
+		}
+	}
+	
+- belongsToMany (thuộc về nhiều, n - n)
+	vd: Một User có nhiều Role và một Role cũng thuộc về nhiều User(vai trò).
+	class User extends Model
+	{
+		// Lấy những vai trò của một user.
+		// role_user: khóa ngoại của bảng User
+		// user_id: khóa ngoại của bảng Role
+		public function roles()
+		{
+			return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+		}
+	}
+	
+
+* thông thường
+	- tham số thứ 1: đường dẫn modle của bảng tham chiếu tới.
+	- tham số thứ 2: khóa ngoài của class hiện tại
+	- tham số thứ 3: khóa chính của bảng tham chiếu tới.
+	
