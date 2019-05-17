@@ -47,8 +47,9 @@
 	class User extends Model
 	{
 		// Lấy những vai trò của một user.
-		// role_user: khóa ngoại của bảng User
+		// role_user: tên bảng trung gian của User và Role
 		// user_id: khóa ngoại của bảng Role
+		// role_id: khóa ngoại của bảng User
 		public function roles()
 		{
 			return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
