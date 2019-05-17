@@ -55,10 +55,36 @@
 			return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
 		}
 	}
-	
 
-* thông thường
-	- tham số thứ 1: đường dẫn modle của bảng tham chiếu tới.
-	- tham số thứ 2: khóa ngoài của class hiện tại
+- hasManyThrough (A -> B -> C, A truy cập vào C thông qua B)
+	vd:
+		countries
+			id - integer
+			name - string
+
+		users
+			id - integer
+			country_id - integer
+			name - string
+
+		posts
+			id - integer
+			user_id - integer
+			title - string
+			
+	class Country extends Model
+	{
+		public function posts()
+		{
+			return $this->hasManyThrough(
+				'App\Post', 'App\User',
+				'country_id', 'user_id', 'id'
+			);
+		}
+	}
+
+* thông thường trừ quan hệ "belongsToMany" ra thì.
+	- tham số thứ 1: đường dẫn model của bảng tham chiếu tới.
+	- tham số thứ 2: khóa ngoại của class/model hiện tại
 	- tham số thứ 3: khóa chính của bảng tham chiếu tới.
 	
