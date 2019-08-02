@@ -1,0 +1,485 @@
+######### SSH-KEY #########
+### create ssh-key follow mail git: > ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+### get ssh-key: > cat ~/.ssh/id_rsa.pub
+
+######### APACHE2 #########
+### start: > sudo service apache2 start
+### restart: > sudo service apache2 restart
+
+
+######### LINUX ###########
+### Cap quyen cho thu file/folder: > sudo chmod -R [777] [/var/www/html]
+
+
+######### SQL #############
+### Dang nhap vao sql: > mysql -u root -p
+### Xem Ds database: > show databases;
+### Tao database: > create database [databaseName];
+### Su dung database: > use [databaseName];
+### Import tu file sql: > source [path file database]; (bo dau nhay don '')
+
+######### Git #############
+### Tắt addfile trong webroot: > sudo nano .git/config
+    Sửa line: filemode = false   
+### Cập nhật tất cả thay đổi trên remote: 
+    - $ git fetch --all -p
+### Chuyển và tạo nhánh mới ở local: 
+    - $ git checkout -b [branchName]
+### *Đứng tại branch A checkout out ra 1 branch mới -> code ở branch mới là code của branch A    
+### Chuyển qua nhánh mới trên origin nhưng dưới local chưa có (thay vì tạo 1 nhánh ở local rồi pull code về)
+    - $ git checkout --track origin/[name_branch]
+### Lưu lại những thay đổi đang làm vào hàng đợi(vd: đang làm nhưng phải chuyển nhánh, nhưng chưa muốn cmit)
+    - $ git stash
+### Lấy lại những thay đổi đang làm từ hàng đợi
+    - $ git stash pop
+### Xóa nhánh dưới local
+    - $ git branch -d <name_branch>
+### Xóa nhánh trên remote
+    - $ git push origin --delete <name_branch>
+### Update những thay đổi từ nhánh khác về nhánh đang làm
+    - $ git merge <name_branch>
+
+    
+######## Queue ############
+### Chạy queue: bin/cake queue runworker
+
+####### Cake cmd ##########
+### Xóa cache:      bin/cake cache clear_all
+###
+### Tạo migrate:    bin/cake migrations create migrationsName
+### Trang thai migrate:     bin/cake migrations status
+### Chay migrate:   bin/cake migrations migrate
+### 
+### Chạy shell:  bin/cake [className] [function]
+
+bin/cake cache clear_all && bin/cake migrations migrate && bin/cake hd_light syncPrograms 
+&& bin/cake hd_light syncContacts 1 DESC && bin/cake hd_light createPromotionLongDate && 
+bin/cake hd_light makePromotionAffiliates && bin/cake cache clear_all
+
+
+######## Cakephp ##########
+ORM cơ bản
+
+### Tạo một mới đối tượng và lưu
+    $entity = TableRegistry::get('TableName')
+        ->newEntity(['fieldName' => $variable,...]);
+    TableRegistry::get('TableName')->save($entity);
+    
+### Update một đối tượng
+    $entity = TableRegistry::get('TableName')
+        ->find()
+        ->where(['fieldName' => $variable,...])
+        ->first();
+    TableRegistry::get('TableName')->save($entity);  
+    
+### Xóa một đối tượng
+    $entity = TableRegistry::get('TableName')
+        ->find()
+        ->where(['fieldName' => $variable,...])
+        ->first();
+    TableRegistry::get('TableName')->delete($entity);    
+    
+### Xóa tất cả đối tượng
+    TableRegistry::get('TableName')->deleteAll(['fieldName' => $variable,...]);
+    
+### Cac thao tac truy van khac
+    TableRegistry::get('TableName')
+        ->find()
+        ->select()
+        ->where()
+        ->limit()
+        ->order()
+        ->count() || ->first() || ->all()
+        
+### Viet Query thuan
+    $queryStr = 'SELECT ';
+    $stmt = $this->conn->execute($queryStr);
+    return $stmt->fetchAll('assoc'); 
+        
+### Tat render view trong cac function "post, ajax"
+    $this->autoRender = false;
+    $this->viewBuilder()->autoLayout(false);
+    
+### Kiem tra phuong thuc truyen
+    vd: $this->request->is('ajax')
+    
+### Ket qua tra ve nen co dang nay:
+    $result = ['message' => 'Success', 'status' => true, 'data' => $data];
+    $result = ['message' => null, 'error' => false, 'data' => $data];
+    
+### Tra ve json cho view khi gui nhan bang ajax
+    $this->response->type('json');
+    $this->response->body(json_encode($result));
+    return $this->response;
+    
+### Tra ve thong bao cho view bang Flash
+    $this->Flash->error(__('message'));
+    $this->Flash->success(__('message'));
+   
+### Truyen du lieu sang view
+    $this->set(['variableName' => $variable, ....])
+    
+    *tu dong render ten bien trung voi ten du lieu
+    $this->set(compact('variable'))
+
+### Su dung: try {} catch () {}
+    try {
+        ...
+    } catch (\Exception $e) {
+        return ['message' => $e->getMessage(), 'error' => true, 'data' => false];
+    }
+
+
+### Join table
+    + Add relasionship in model Table
+        
+    Cach 1:
+        TableRegistry::get('TableName1')
+        ->find()
+        ->select([field of TableName1])
+        ->where(['fieldName' => $variable,...])
+        ->join([
+            'table' => 'TableName2',
+            'alias' => 'aliasName',
+            'fields' => [field of TableName2],
+            'conditions' => 'aliasName.fieldName = TableName1.fieldName',
+        ]);
+    Cach 2:
+        vd: join multiple table (long nhau, tbl co mqh voi tbl2 nhung ko co mqh voi tbl3, nhung ta muon ket tbl1 va tbl3 ta dung tbl2 lam trung gian)
+        + Model
+            TableName1
+            $this->hasMany('TableName2');
+            
+            TableName2
+            $this->belongsTo('TableName1');
+            $this->hasMany('TableName3');
+            
+            TableName3
+            $this->belongsTo('TableName2');
+        
+            $query = $this->TableName1
+                ->find('all')
+                ->contain([
+                    'TableName2.TableName3' //long nhau
+                ]);
+
+### API Stripe
+    Import:
+        + use Stripe\Account;
+        + use Stripe\Charge;
+        + use Stripe\Stripe;
+        + use Stripe\Transfer;
+    Call:
+        + Account::(xem doc)
+        + Charge::(xem doc)
+        + Stripe::(xem doc)
+        + Transfer::(xem doc)
+        
+### Load component or modelTable
+    use [path namespace component]
+    use [path namespace model]
+    Cach 1:
+        * NameComponent, NameTable
+        
+        + public $components = ['Name1, 'Name2', (*)'NameAlias' => ['className' => 'Name3']];
+        + public $uses = array('Name1', 'Name2', ...); //use for tableName models
+        (*) Customize lai aliasName: 
+               'NameAlias' => ['className' => 'Name']
+    Cach 2:
+        public function initialize()
+        {
+            parent::initialize();
+            $this->loadModel('Name1');
+            $this->loadModel('Name2');
+            
+            $this->loadComponent('Name3');
+        }
+
+### Add new file config
+    file_config.php
+    #############
+    <?php
+    return [
+        'variable' => ...
+    ]
+    #############
+    trong file config/bootstrap.php
+    Load config: Configure::load('nameFile');
+    #############
+    Configure::read('variable');
+
+### render view Email
+    vd:
+    $email = new Email();
+    $email->to()
+        ->sender('platform@babyquip.com', 'BabyQuip Platform Email')
+        ->from('platform@babyquip.com', 'BabyQuip')
+        ->bcc([])
+        ->subject()
+        ->emailFormat('html')
+        ->template('nameTemplate'])
+        ->viewVars(compact('variable'));
+    return $email->send();
+    
+    *->template(dinh-dang-file-name) : view templay la ten file .ctp (path: Template/Email/html/[dinh_dang_file_name].ctp
+    *->viewVars() : return data qua view template
+
+### Chuyen huong du lieu
+    $this->redirect(string|array $url, integer $status)
+        vd:
+            $this->redirect(['controller' => 'Orders', 'action' => 'thanks']);
+            $this->redirect('/orders/thanks');
+            $this->redirect(['action' => 'edit', $id]);
+            $this->redirect([
+                'controller' => 'Orders',
+                'action' => 'confirm',
+                '?' => [                    //param tren url
+                    'product' => 'pizza',
+                    'quantity' => 5
+                ],
+                '#' => 'top'
+            ]);
+
+### 
+
+### Get config tu .env
+    Configure::read('nameVariable in .env')
+    
+############ PHP ############
+
+###array_combine 
+$key = ['green', 'red', 'yellow'];
+$value = ['avocado', 'apple', 'banana'];
+$array = array_combine($key, $value);
+=> $array[ [green]=>avocado, [red]=>apple, [yellow]=>banana ];
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

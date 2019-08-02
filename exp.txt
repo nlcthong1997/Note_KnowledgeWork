@@ -54,6 +54,7 @@
 // lấy lại những thay đổi đang làm từ hàng đợi
 - $ git stash pop
 
+// *Trước khi xóa nhá hiện tại, cần chuyển sang 1 nhánh khác, sau đó tiến hành xóa.
 // xóa nhánh dưới local
 - $ git branch -d <name_branch>
 
