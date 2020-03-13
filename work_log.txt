@@ -9,16 +9,17 @@
 
 ######### LINUX ###########
 ### Cap quyen cho thu file/folder: > sudo chmod -R [777] [/var/www/html]
+### Tim 1 chuoi o bat ki dau: grep -ri ["X-Frame-Options"] [/etc/apache2]
 
 
-######### SQL #############
+############################### SQL ################################
 ### Dang nhap vao sql: > mysql -u root -p
 ### Xem Ds database: > show databases;
 ### Tao database: > create database [databaseName];
 ### Su dung database: > use [databaseName];
 ### Import tu file sql: > source [path file database]; (bo dau nhay don '')
 
-######### Git #############
+############################### Git #######################################
 ### Tắt addfile trong webroot: > sudo nano .git/config
     Sửa line: filemode = false   
 ### Cập nhật tất cả thay đổi trên remote: 
@@ -38,15 +39,57 @@
     - $ git push origin --delete <name_branch>
 ### Update những thay đổi từ nhánh khác về nhánh đang làm
     - $ git merge <name_branch>
+### Check các branch hiện tại trên remote và dưới local
+	- $ git branch -a
+	
+### Config username email
+	- $ git config user.name "test"
+	- $ git config user.email test@test.com
+
+### Quy trình rebase
+	VD: dev là nhánh chính A là nhánh con
+	-Ta đang làm việc trên nhánh A và done task.
+	1. Push code nhánh A lên (tránh quá trình rebase lỗi thì code A ko mất)
+		- git add .
+		- git commit -m".."
+		- git push
+	2. Kéo code từ dev về (có 2 cách)
+		2.1 Ta checkout qua nhánh dev và pull code về
+			- git checkout dev
+			- git pull --rebase
+			- git checkout A
+			- git rebase dev
+		2.2 Ta đứng tại A và pull code từ dev về
+			- git pull origin dev --rebase
+	3. Fix conflict cho từng commit (ko commit chỉ add)
+		3.1 Fix conflict a,b,c,.... và save file a,b,c,...
+		3.2 git add a b c ...
+		3.3 git rebase --continue
+		3.4 Tới commit tiếp theo, nếu ko có conflict thì ta next
+			- git rebase --skip
+		3.4 Tới commit tiếp theo nếu vẫn còn conflict thì tiếp tục quay lại bước 3.1
+	4. Khi fix xong hết tất cả commit ta push code
+		- git push -f
+	
+	* Trong quá trình rebase nếu có lỗi hay vấn đề gì khá, ta có thể hủy rebase, nếu ko chắc abort quay về trạng thái ban đầu
+	thì có thể xóa nhánh A dưới local rồi pull về lại nhánh A đã push ở bước 1
+		- git rebase --abort
+    
+####################### Cac lenh commandline tren Ubuntu ##########################
+### Thu muc mat dinh Home bat dau bang ki tu: ~
+### Cac thu muc he thong bat dau bang ki tu: /
+### Chuyen doi thu muc:> cd [path]
+### Ve thu muc cha cua thu muc hien tai hoac file hien tai:> cd ..
+### Ve thu muc truoc do 1 cap:> cd -
 
     
 ######## Queue ############
-### Chạy queue: bin/cake queue runworker
+### Chạy queue: bin/cake queue runworker -q
 
-####### Cake cmd ##########
+######################## Cakephp cmd ##############################
 ### Xóa cache:      bin/cake cache clear_all
 ###
-### Tạo migrate:    bin/cake migrations create migrationsName
+### Tạo migrate:    bin/cake migrations create migrationsName (viet hoa chu cai dau tien)
 ### Trang thai migrate:     bin/cake migrations status
 ### Chay migrate:   bin/cake migrations migrate
 ### 
@@ -57,7 +100,41 @@ bin/cake cache clear_all && bin/cake migrations migrate && bin/cake hd_light syn
 bin/cake hd_light makePromotionAffiliates && bin/cake cache clear_all
 
 
-######## Cakephp ##########
+########### Cac thao tac voi file migration.php #################
+### Rename table 
+    $this->table('name_original')
+         ->rename('name_new')
+         ->update();
+
+### Rename column
+    $this->table('categories_items')
+        ->renameColumn('item_id', 'partner_item_id')
+        ->update();
+    
+### Create table
+    $this->table('name_table')
+        ->changeColumn('sort', 'integer', [
+            'default' => 0,
+            'limit' => 11,
+            'null' => false
+        ])
+        ->addColumn('column_name', 'type', [
+            'default' => null,
+            'limit' => 11,
+            'null' => true,
+            ...
+        ])
+        ->create();
+
+### neu column co type la point, ta can dinh nghia lai type o modle, vi mac dinh la string
+protected function _initializeSchema(\Cake\Database\Schema\TableSchema $schema)
+    {
+        // Map the correct column to the point type
+        $schema->columnType('geo_location', 'point');
+        $schema->columnType('delivery_geo_location', 'point');
+        return $schema;
+    }
+######################### Cakephp ########################
 ORM cơ bản
 
 ### Tạo một mới đối tượng và lưu
@@ -85,13 +162,15 @@ ORM cơ bản
 ### Cac thao tac truy van khac
     TableRegistry::get('TableName')
         ->find()
-        ->select()
+        ->select('id')
         ->where()
+        ->extract('id') // nằm sau where và trả về kết quả là một mạng : [id1, id2, id3]
         ->limit()
         ->order()
         ->count() || ->first() || ->all()
-        
+
 ### Viet Query thuan
+use Cake\Datasource\ConnectionManager;
     $queryStr = 'SELECT ';
     $stmt = $this->conn->execute($queryStr);
     return $stmt->fetchAll('assoc'); 
@@ -119,7 +198,7 @@ ORM cơ bản
 ### Truyen du lieu sang view
     $this->set(['variableName' => $variable, ....])
     
-    *tu dong render ten bien trung voi ten du lieu
+    **Tu dong render ten bien trung voi ten du lieu
     $this->set(compact('variable'))
 
 ### Su dung: try {} catch () {}
@@ -239,247 +318,112 @@ ORM cơ bản
                 ],
                 '#' => 'top'
             ]);
+            
+### Pagination
+    **function
+    $this->paginate = [
+        'limit' => 6,
+        'order' => [
+            'rent_count' => 'desc',
+        ],
+    ];
+    $result = $this->paginate('kết quả sau khi truy vấn');
+    // lấy các thông số param trong paging 
+    $itemPaginatorParams = $this->Paginator->getPagingParams();
+    
+    **view
+    echo $this->Paginator->prev('');
+    echo $this->Paginator->numbers(['separator' => '', 'currentClass' => 'active', 'tag' => 'li', 'url' => 'phần cuối của url đang paging ****']);  vd: url: "abc/edf" => phần cuổi url "edf"
+    echo $this->Paginator->next('')
 
-### 
+### Render view Ajax và trả về 1 view template ctp
+    **bên funciton
+    // dữ liệu truyền ra view template
+    $this->set(['reviews' => $reviews, 'reviewPagingParams' => $reviewPagingParams]);
+
+    // tắt template và bật ajax
+    $this->layout = 'ajax';
+
+    // render
+    // Nếu template sử dụng trong plugin thì truyền thêm plugin
+    $this->viewBuilder()->setTheme('BabyQuipModern');
+    // trả cho hàm ajax view template từ trong Element
+    $this->render('/Element/Partners/reviews');
+    
+    **Bên view ajax như sau
+    $.get(url, function (data) {
+        $(el).append(data);
+        // data là 1 template được render
+    });
+    
+    
+    HOAC
+     $view = new View();
+    $view->layout = false; // if you want to disable layout
+    $view->set(['item' => $item, 'itemType' => $itemType, 'url_name' => $tmpPartner->url_name]); // set your variables for view here
+    $html .= $view->render('BabiergeModern.Element/Items/listitem', 'ajax');
 
 ### Get config tu .env
     Configure::read('nameVariable in .env')
     
-############ PHP ############
+####################### PHP ##########################
 
-###array_combine 
+***array_combine 
 $key = ['green', 'red', 'yellow'];
 $value = ['avocado', 'apple', 'banana'];
 $array = array_combine($key, $value);
 => $array[ [green]=>avocado, [red]=>apple, [yellow]=>banana ];
 
+***strlen
+
+***ham uasort
+
+####################### Library JS ####################
+
+- daterangepicker 
+- Amsify Jquery Suggestags (select-apply tag)
+- 
+
+###################### JavaScript/Jquery ######################
+
+Get
+- $('input[name="nameInput"]')    : input
+- $('select[name="nameSelect"]')  : select option
+
+- Check variable underfiled : if (typeof variable !== 'undefined') {}
+
+- Get data-id html  : $(this).data('id');
+
+- Check checked of checkbox: $('input[name=".."]').is(':checked')
+
+- 
 
 
+####################### NOTE ##########################
+
+***Search-full-text----MYSQL
+- SELECT * FROM table WHERE MATCH (column,...) AGAINST ('text-search' IN BOOLEAN MODE);
+- (*IN BOOLEAN MODE : tìm kiếm được những cụm từ có khoảng cách mà chứa text-search)
+- (*IN NATURAL LANGUAGE MODE: tìm các từ được cung cấp trực tiếp từ text-search)
+Full text search no khong giong LIKE
+No nhan dang theo word, language lấy theo setting của databse
+Do vậy trong db em cần save những từ English đúng chính tả
+Nó mới search được
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+########################### ACCOUNT ########################
+SLACK
+work-space-url: babyquip.slack.com
+thong.nguyenchi@hdwebsoft.co/F***97
 
+BUG-HERD
+thong.nguyenchi@hdwebsoft.co/Password123@
 
+SONAR
+thong.nguyenchi/Password123@
 
+EMAIL-HD
+thong.nguyenchi@hdwebsoft.co/F***97
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ASANA
+thong.nguyenchi@hdwebsoft.co/Password123@
