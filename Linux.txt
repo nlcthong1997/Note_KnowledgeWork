@@ -1,0 +1,97 @@
+### Hiển thị vị trí hiện tại trong hệ thống.
+	$ pwd
+	
+### Cung cấp danh sách file/folder
+	$ ls
+	$ ls -a	(* hiển thị file bắt đầu bằng dấu chấm)
+	$ ls -l	(* hiển thị quyền/kích thước/ngày giờ tạo)
+	$ ls -al (* hiển thị tất cả bao gồm cả file ẩn)
+	$ ls -R (* hiển thị chi tiết các file và thư mục con có trong thư mục cha)
+	
+### Hiển thị các lệnh đã nhập trước đó.
+	$ history			(* tất cả lệnh đã nhập trước đó)
+	$ history |tail -n 	(* n lệnh đã nhập trước đó)
+
+### Lệnh thay đổi mật khẩu hiện tại của hệ thống.
+	$ passwd
+
+### Tạo folder
+	$ mkdir folder
+	$ mkdir -p folderA/folderB/folderC	(* tham số -p để có thể tạo nhiều thư mục con)
+	
+### Tạo file
+	$ touch file
+	
+### Sao chép file/folder
+	$ cp file1 file2			(* sao chép nội dung file1 vào file2)
+	$ cp -r folder1 folder2 	(* tham số -r khi ta thực hiện với thư mục) 
+	
+	(* nếu tham số folder2 hoặc file2 chưa tồn tại, lệnh trên sẽ tạo ra folder2 hoặc file2 rồi sau đó thực hiện lệnh cp)
+	
+### Đổi tên file/ Di chuyển thư mục
+	$ mv file1 newfile1		(* khi thực hiện với file lệnh sẽ đổi tên file)
+	$ mv file1 folder2		(* duy chuyển thư mục file1 vào trong thư mục folder2)
+	$ mv folder1 folder2	(* duy chuyển thư mục folder1 vào trong thư mục folder2)
+	
+### Xóa file hay thư mục
+	$ rm file
+	$ rm folder
+	$ rm file1 file2 folder1 folder2	(* xóa cùng lúc nhiều file hay folder)
+	
+	$ rm <option> file/folder 		(Có thể kết hợp nhiều options lại với nhau)
+									<option> : -d : Xóa thư mục rỗng.
+											   -f : Xóa và bỏ qua các câu hỏi xác nhận Y/N
+											   -i : Xác nhận Y/N trước khi xóa
+											   -r : Xóa toàn bộ file và thư mục con của thư mục cần xóa.
+
+### Cấp quyền cho file/folder:
+	$ chmod [tùy chọn] [biểu diễn phân quyền] [tên file hoặc thư mục]
+	
+	[tùy chọn]
+	-v: hiển thị báo cáo sau khi chạy lệnh. Nếu bạn chmod nhiều file/folder cùng lúc thì cứ mỗi lần nó đổi quyền của 1 file/folder xong là sẽ hiện báo cáo.
+	-c: giống như trên, nhưng chỉ hiện khi nó đã làm xong tất cả.
+	-f: Hiểu ngắn gọn là kiểu “kệ mẹ nó”, nếu có lỗi xảy ra nó cũng không thông báo.
+	-R: nếu bạn CHMOD một folder thì kèm theo -R nghĩa là áp dụng luôn vào các file/folder nằm bên trong nó.
+	
+	[biểu diễn phân quyền] 
+	Có thể biểu diễn bằng 3 cách
+	- kiểu ký tự: giống như ở trên (rw-rw-x–).
+	- kiểu ugo: kiểu này sẽ phân quyền cho từng đối tượng phân quyền.
+	- kiểu số: cũng giống như ở trên (644).
+	
+	(*)
+		r (read) – quyền đọc file/folder
+		w (write) – quyền ghi/sửa nội dung file/folder
+		x (execute) – quyền thực thi (truy cập) thư mục. Đối với thư mục thì bạn cần phải có quyền execute thì mới dùng lệnh cd để truy cập vào được
+	(**)
+		Quyền r được biểu diễn bằng số 4.
+		Quyền w được biểu diễn bằng số 2.
+		Quyền x được biểu diễn bằng số 1.
+	(***)
+		biểu diễn phân quyền ---(owner) ---(group) ---(user)
+	
+	
+	vd: $ sudo chmod -R 777 /var/www/html
+	
+	Tham số -R áp dụng cho tất cả các file và thư mục bên trong
+	
+	
+# VIM
+	Mở file: $ vim filename
+	Nhập file: nhấn i
+	Save file: Esc :w
+	Thoát file: Esc :q
+	Chuyển sang mode: nhấn Esc
+	Copy : yy
+	Past: p
+	Quay lai đầu file: gg
+	Xuống cuối file: G
+	Xóa các ký tự trong 1 cặp dấu nào đó: ci[ hay ci" hay ci( ...
+	Xóa một dòng: dd
+	Xóa từ: d
+	Xóa 3 từ: 3d
+	Xóa 1 ký tại vị trí con trỏ: x
+	Duy chuyên đến cuối dòng: $
+	Đi đến vị trí của 1 từ:  /từ 
+	
+	

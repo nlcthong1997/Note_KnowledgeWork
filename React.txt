@@ -1,0 +1,108 @@
+- React JS:
+	+ Cài đặt nodejs
+	+ Cài đặt npm
+	+ Thiết lập môi trường react: 
+		npm i -g create-react-app
+	+ Tạo project: 
+		create-react-app [project-name]
+	+ Add tailwind (Bootstrap)
+		1. Install Tailwind and PostCSS CLI with
+			$ npm i -D tailwindcss postcss-cli
+		2. Make a Tailwind config
+			$ npx tailwind init
+		3. Create postcss.config.js file at root of your project:
+			//Add code here
+			const tailwindcss = require('tailwindcss');
+			module.exports = {
+			  plugins: [
+				tailwindcss('./tailwind.config.js')
+			  ]
+			};
+		4. In src/ create tailwind-own.css and write this
+			//Add code here
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+		5. Import “./tailwind.css” (not “./tailwind-own.css”) in your index.js.
+			//Add code here
+			import './tailwind.css';
+		6. Change your scripts of package.json
+			"scripts": {
+				...,
+    			"start:tw": "postcss ./src/tailwind-own.css -o ./src/tailwind.css -w",
+				...,
+			}
+		7. Run
+			$ npm run start:tw
+			If use Ubuntu => error
+				Fix: 
+						$ cat /proc/sys/fs/inotify/max_user_watches      => result: 8192
+					*You can set a new limit temporary with:
+						$ sudo sysctl fs.inotify.max_user_watches=524288
+						$ sudo sysctl -p
+				 Run again
+					$ npm run start:tw
+		8. Run
+			$npm start
+			
+	+ Cài đặt Typescript
+		npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+	+ Cài đặt Style-component
+		npm install --save @emotion/core
+		npm install --save @emotion/styled
+	+ Cài đặt router
+		npm install @reach/router
+		npm install --save @types/reach__router
+		
+		
+- My SSH-key
+	+ key-babyquip
+	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6S09JeTe1yfs7cDN7QM0YDNC6/OyIx9aGDvQynNNN3SULx6i/iyDbBHbetR3Gv/cm9A5qiyarK4ZGDdnSeQOXq5Djqngo70JQ6urwMqfpDnbPZK3ajTlR1gfsRE8fNPpP2BI9rqM8Zgo97IbmEjMIsKTOOlIUiFla076SmdDWnxHyI+UFzjRypZTOYIhNp2DBFjP2FLpaZ7wyh8RxJlStNDZQMu0cAtN+5Z1rIAlZLirLU0+WoZDC76WYaGxCauKhw+fYRtn8R0uxbXMWXgFssLErJoKDCAaZtZOoA9QQSMkVZ4CBzILXUV45NUtYe8VQZ+0iNkXD0Rc6B15bfhApkEeT3AOj58E/f4uCPHypszFqc+nsFEObqcTpH/WvieFjrMWcI1HeBmwuFGTer4vgsI8AMTKOuYcFl7hK2nEl2+whS3VQJRnledmXq9UvK7ou5DnI6g5qrOuR+joESyu3ztNJspk648QEIV5dOuFRBsbfLzn2PTnZ9sMUASC3aYVdB7akehb0fB1DoRnu5SZbOIGBJiWC34QK/ssZWtVDdK0rdS76F1uJpm5wLhexu2l10q4OEJFSlgVjHRqO6P64XIJhbY3JL2hN68+2CsOeg/Xk0AlcHVsSINRgRnUIgqQPMaGyoGJj2WJQGDVSspepyNvkIvJSeLYweMc5whhlPw== thong.nguyenchi@hdwebsoft.co
+	
+	+ key react
+	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsMJqJRDhaU235MxJP0GtUQZwBNwoiKU2c6tbVVxQxrP/ogOA/udZqgqelMVNcnIYNAlC/kmGxbzgTIb5RYXRknSsiaf1uzl2b8lVHqMChvbxQ+60dQWCd5D2YaQwL8aKEhfva55J/tLfZj2Yo5IrLwr7cCZOKzOtig/3FKTWg0C3RX7ac+Z6Dn9kuNVe26jEsYYHQnQLrNyQiH/7c4vsFsYYjG8rG7lPL+Z0gkVbVzCcKy5wT59XRCDecTm99FRt05vPeTWew1meaLnwidfTOQQM7HQ9K0ct2xEgnQ5PCFeSkMCF96JljHgFUDdaLzC/STotVTfnR7/YXaf3QQ2MyEC5cTdkuRLtPUgKwF2ZZJBJyTVjd+DypsDziuaTRYyZR3VMEh4kQkiKf17q5WX/hiW7OtP6jDdLuW/NwRYBThPIL+a1PRI4jF9hxqJs/TSlxa3r0ryebUCNvB/JQrqc5/HA6aAsVdYMGB+TM2VzZFrf7/GQoX68pFY6DnlBM/p/WEEye1aiOzwsT4fa/hnYTgXJzuIdtmjPjD0Ex4n0zvS2rN2Nfp+VheHln9M9EP2+3Lbm2+5qKI8YgwN1KgCTo+0WOFYGaPl5uv+r8+1kVYLDSC+49InfbmwgeD+DTk1gND4fSQaw9tC3Q01XhaKo3dUpLZWj3g9CvRBVp8CDuHw== thong.nguyenchi@hdwebsoft.co
+
+- Xem trước
+	+ react + function components + hook
+	+ tailwindcss
+	+ styled-components: 
+	+ apollo react hook : https://www.apollographql.com/docs/react/migrating/hooks-migration/
+	+ semantic-ui react: https://react.semantic-ui.com/
+
+- setup project of hdwebsoft
+	1. rm -rf node_modules package-lock.json
+	2. npm install
+	3. npm install tailwindcss@1.1.4
+	4. npm install tailwindcss-transitions@2.0.1
+	5. npm install gatsby@2.13.31
+	4. npm run start
+
+- Research if free-time
+	+ lazy load react (tối ưu hóa ứng dụng)
+	+ cherry-pick (trích xuất commit sang nhánh khác)
+	+ rebase 
+	
+
+
+
+
+Project web inar
+- Flow source 
+	+ Component chứa các phần của trang web như: header, logo, sideBar,...
+	+ Section chứa các thư mục là các trang tương ứng trên url
+		1. Trong mỗi thư mục sẽ chứa 1 file index: chứa flow tổng quát của trang tương ứng
+
+
+REACT
+- có thể tạo nhiều fnc-render-child trong cùng 1 file sau đó render tập trung tại func-render-parent (func đc export)
+- props: truyền dữ liệu qua các components.
+- state: lưu trữ dữ liệu trong nội bộ component.
+- ref: dùng để lấy những giá trị ở các DOM Element
+- 
+
+APOLLO GRAPHQL
+- useQuery: 	truy vấn tự động khi câu query được nạp
+- useLazyQuery: truy vấn bằng tay (vd: như khi user click button)
+
+
+

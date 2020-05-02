@@ -34,9 +34,10 @@
 ### Lấy lại những thay đổi đang làm từ hàng đợi
     - $ git stash pop
 ### Xóa nhánh dưới local
-    - $ git branch -d <name_branch>
+    - $ git branch -d <name_branch> (nếu fully merged)
+    - $ git branch -D <name_branch> (nếu not fully merged)
 ### Xóa nhánh trên remote
-    - $ git push origin --delete <name_branch>
+    - $ git push origin --delete <name_branch>     *(chỉ name ko kèm theo origin)
 ### Update những thay đổi từ nhánh khác về nhánh đang làm
     - $ git merge <name_branch>
 ### Check các branch hiện tại trên remote và dưới local
@@ -119,12 +120,16 @@ bin/cake hd_light makePromotionAffiliates && bin/cake cache clear_all
             'null' => false
         ])
         ->addColumn('column_name', 'type', [
+            'after' => 'string',  // thêm sau cột nào đó trong DB, (có hoặc ko)
             'default' => null,
             'limit' => 11,
             'null' => true,
             ...
         ])
         ->create();
+        
+#### Type column
+
 
 ### neu column co type la point, ta can dinh nghia lai type o modle, vi mac dinh la string
 protected function _initializeSchema(\Cake\Database\Schema\TableSchema $schema)
@@ -168,10 +173,27 @@ ORM cơ bản
         ->limit()
         ->order()
         ->count() || ->first() || ->all()
+		
+##### Group by and Having
+	$query = $this->OrderActions->find();
+	$query->select(['order_id', 'count' => $query->func()->count('*')])
+		->where(['type' => 'Cancel'])
+		->group('order_id')
+		->having(['count >' => 1])
+		->all();
+		
+###### Transaction
+	ini_set('memory_limit', '-1');
+	$this->conn = ConnectionManager::get('default');
+	$this->conn->transactional(function () use (...variable) { .....code here });
+    $this->conn->transactional(function () { .....code here });
 
 ### Viet Query thuan
 use Cake\Datasource\ConnectionManager;
-    $queryStr = 'SELECT ';
+	$this->conn = ConnectionManager::get('default');
+	ini_set('memory_limit', '-1');
+    ----------#####--------------
+	$queryStr = 'SELECT ';
     $stmt = $this->conn->execute($queryStr);
     return $stmt->fetchAll('assoc'); 
         
@@ -427,3 +449,222 @@ thong.nguyenchi@hdwebsoft.co/F***97
 
 ASANA
 thong.nguyenchi@hdwebsoft.co/Password123@
+
+
+############################################################
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

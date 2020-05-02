@@ -1,0 +1,18 @@
+Bootstrap 4:
+
+- overflow	:  	xác định điều gì sẽ xảy ra nếu một thành phần box tràn nội dung.
+- shadow	:  	hiệu ứng đỗ bóng.
+- rounded	:  	border-radius(bo tròn)
+
+- text-{color}	: 	màu chữ
+- text-{left|right|center|justify}	: căn vị trí chỉnh chữ
+- text-... 	:	các biến đổi liên quan đến chữ
+
+- m-... 	:	margin
+- my-...	:	margin-top, margin-bottom
+- mx-...	:	margin-left, margin-right
+- m{t|b|l|r}-...	: margin[top|bottom|left|right]
+
+- bg-{color}	:	background (màu nền)
+- bg-{repeat}	:	background (hiệu ứng)
+

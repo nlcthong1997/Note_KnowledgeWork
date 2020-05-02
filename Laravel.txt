@@ -1,0 +1,94 @@
+PHP:
+	(-*-) Hàm __invoke() : Cho phép ta sử class khai báo nó như một hàm. Ta có thể truyền tham số cho hàm invoke hoặc không.
+		
+		vd:
+			class Example {
+				public $variable = 'variable';
+				public function __invoke() {
+					echo 'This is fnc invoke()';
+				}
+			}
+			
+			$example = new Example();
+			$example();  //Phương thức __invoke() sẽ tự động được gọi và xuất ra => 'This is fnc invoke()'
+			
+	
+	(-*-) Hàm __construct() : Đây là hàm tạo, nơi chứa các phương thức hay thuộc tính khởi tạo mà bạn định nghĩa.
+						  Nó sẽ chạy trước khi có một phương thức hay thuộc tính nào đó trong class được gọi.
+						  (*)Một cách khác để tạo hàm khởi tạo cho class là đặt tên hàm trùng với tên class.
+						  Ta có thể truyền tham số cho construct hoặc không.
+		
+		vd:
+			class Example {
+				public function __construct() {
+					echo 'This is fnc construct';
+				}
+				
+				public function first() {
+					echo 'This is fnc first';
+				}
+			}
+			
+			$example = new Example();	// => 'This is fnc construct'
+			$example->first();	// => 'This is fnc first'  
+	
+	
+	(-*-) Hàm __destruct : Đây là hàm chạy cuối cùng trong class khi các phương thức khác đã hoàn thành.
+	
+
+Laravel:
+	**How to clone project from repo
+		- $ git clone REPOSITORY_URL
+		- $ composer install
+		- $ npm install
+		- $ cp .env.example .env
+		- $ php artisan key:generate
+		- $ php artisan serve [--port=...]
+
+	1/ Seeder: là file tạo ra dữ liệu giả để import vào database, thuận tiện khi ta không cần phải nhập tay vào database từng record
+		Tạo seeder:
+			$ php artisan make:seeder <Name>TableSeeder
+		Chạy seeder:
+			$ php artisan db:seed --class=<Name>TableSeeder
+		
+		Làm mới cơ sở dữ liệu và chạy tất cả seeder
+			$ php artisan migrate:refresh --seed
+	
+	2/ Migrate: là file ta định nghĩa khung cho table hoặc các field trong table để khi chạy file sẽ tiến hành tạo table hoặc update cho table vào database.
+		Tạo migrate:
+			$ php artisan make:migration create_<Table>_table --create=<Table>
+		Rollback migrate:
+			$ php artisan migrate:rollback
+				or
+			$ php artisan migrate:rollback --step=<Number> 	//step quay lại trước đó Number lần
+		Chạy migrate:
+			$ php artisan migrate
+		Chạy migrate không có cảnh báo cho dù có xảy ra lỗi:
+			$ php artisan migrate --force
+	
+	3/ Controller
+		Tạo controller:
+			$ php artisan make:controller <NameController> --invokable
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+	

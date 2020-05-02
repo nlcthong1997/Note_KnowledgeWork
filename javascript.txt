@@ -1,0 +1,90 @@
+Typescript:
+	- Enum: 
+		Kiểu dữ liệu được sử dụng khi ta có tập hợp một loạt các hằng số (các ngày trong tuần, các tháng trong năm,...)
+
+Event:
+	- e.stopPropagetion(): ngăn chặng sự kiện của phần tử con tác động lên phần tử cha.
+		vd:
+			<div class="parent">
+				<div class="child">
+					click.
+				</div>
+			</div>
+	
+			$('.parent').click(function(){
+				$(this).css({"background-color": "red"});
+			})
+			
+			$('.child').click(function(){
+				$(this).css({"background-color": "blue"});
+			})
+			
+			+ khi ta click vào div có class="child" thì div có class="parent" cũng sẽ được kích hoạt event click, do DOM child nằm bên trong phần tử DOM parent,
+			  nếu lúc này tư dùng event "stopPropagetion" và khi click vào DOM child thì DOM parent sẽ ko kích hoạt sự kiện click
+	
+	
+	- e.preventDefault(): ngăn chặn hành động mặt định của sự kiện
+
+VueJS:
+	- LIFE CIRCLE
+		+ beforeCreate:
+			~ ko truy xuất được vào method data()
+			~ ko truy xuất được vào DOM
+			
+		+ created:
+			~ truy xuất được vào data(), thường call API, Ajax, ... ở đây
+			~ ko truy xuất được vào DOM
+			
+		+ beforeMount:
+			~ truy xuất được vào data()
+			~ ko truy xuất được vào DOM
+
+		+ mounted:
+			~ truy xuất được vào data()
+			~ truy xuất được vào DOM, bắt đầu sử dụng được các thư viện JS ở đây
+
+		
+	- CÁCH SỬ DỤNG CÁC METHOD, INSTANCE, ... TRONG VUE
+		- computed:
+			Functios trong computed sẽ được kích hoạt khi các biến đang có trong function thay đổi giá tr.
+			vd: data() {
+					return {
+						isLoading: true
+					}
+				}
+				computed: {
+					show() {
+						return isLoading;
+					}
+				}
+			
+			=> Khi biến isLoading thay đổi giá trị thì function show sẽ được kích hoạt.
+
+
+		- watch:
+			+ Khi bạn có một số dữ liệu cần được thay đổi dựa trên những dữ liệu khác, ta có thể dùng watch.
+			+ Tên function trong watch phải tương ứng với tên biến mà ta sẽ sử dụng khi nó thay đổi giá trị.
+			vd: data() {
+					return {
+						isLoading: true
+					}
+				},
+				watch: {
+					isLoading: function (isLoad) {
+						//khi giá trị của isLoading thay đổi, function này sẽ được gọi.
+					}
+				}
+
+
+		- created: 
+			Created sẽ được gọi khi ta truy cập vào url của vue đang chứa func này 
+			vd: Ta có một view home.vue tương ứng vs url: /home
+				Khi đường dẫn này được nhập hoàn tất trên trình duyệt thì fnc created trong home.vue sẽ được kích hoạt.
+
+
+		- env:
+			Khi khai báo key trong .env ta phải bắt đầu bằng "VUE_APP_".    vd:  VUE_APP_API 
+		
+	
+		
+	
