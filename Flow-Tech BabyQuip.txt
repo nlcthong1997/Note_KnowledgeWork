@@ -1,0 +1,88 @@
+stripe_transfers: 
+	thông tin về các giao dịch nhận tiền
+
+stripe_transfer_reversals: 
+	thông tin về các giao dịch bị refund
+
+###insurance_payments:  
+	thông tin về các khoản phí của partner phải trả cho platform (có thể hiểu là phí bảo trì, phí sử dụng dịch vụ)
+	
+	
+###stripe
+	- payout
+		+ retrieve : lấy thông tin của payout hiện tại bằng cách cung cấp payoutID
+		
+
+
+###Flow babyQuip:
+- Item với nhãn for_shopping.
+	for_shopping ko có lưu trong database , nhưng khi ta load Entity Model sẽ dựa vào trên và check theo vào entity
+	nếu item trong partner_item match với name == 'Personal Shopping Service' => item['for_shopping'] = true;
+	
+	+ Partner-admin 
+		Với những item trong bảng partnerItems, item nào có nhãn 'is_editable' == false thì những item đó partner ko được edit/save/delete bên url: /partner/items
+		Với view edit từng item thì có thể edit được các tất cả item
+			.Nhưng với item có nhãn 'is_editable' == false thì chỉ edit được 2 checkbox show_public và is_available
+			.'is_editable' == true thì edit được all input field.
+
+	+ Customer
+		Giỏ hàng chỉ có thể có duy nhất 1 item có nhãn for_shopping, và item này ko đc thay đổi (tăng/giảm) số lượng.
+		Xử lý add/check item for_shopping vào cart 
+		/var/www/html/babierge-platform/src/Controller/CartController.php   		function add()
+		/var/www/html/babierge-platform/src/Controller/CartController.php			function removeItem()
+		/var/www/html/babierge-platform/plugins/BabyQuipModern/webroot/js/main.js	$(document).on('click', '.addreservation', function (e) {})
+
+- Nhãn is_available của item trong partner_item
+	Khi item có nhán show_public là true/false thì sản phẩm của partner sẽ hiển thị hoặc không tuong ứng với giá trị của 2 giá trị này
+	Lúc này những items hiển thị sẽ được check bằng nhãn item['show_public']
+	Nhưng item detail thì lại ko đc check bằng show_public
+	Partner có thể đưa cho customer link để tới thẳng item detail dù cho item đó có được show_public hay là ko. Nên lúc này ta dùng nhãn is_available để hiển thị item detail
+
+
+- Khi trong cart có 1 item for_shopping thì cost Purchase Surcharge Total se hiển thị bên order_summary
+
+
+
+
+###Tech 
+- Render Flash khi action được render bằng ajax:
+	// function viết bên component
+	public function setFlashRenderAjax($type, $msg)
+    {
+        $controller = $this->_registry->getController();
+        if ($type === 'success') {
+            $controller->Flash->success(__($msg));
+        }
+        if ($type === 'error') {
+            $controller->Flash->error(__($msg));
+        }
+        $this->response->type('json');
+        $this->response->body(json_encode(['flash_ajax' => true]));
+        return $this->response;
+    }
+	
+	//bên file.js nơi trả về success của ajax
+	if (typeof tableData.flash_ajax != 'undefined') {
+		window.location.href = window.document.location.href;
+	}
+
+- Dùng form để chứa dữ liệu các field, và khi ajax ta dùng serialize() để get các field input đó. Tránh trường hợp gọi từng field bằng jquery
+	
+
+
+
+##### SET UP SERVER SSO FOR SITE CLEANING
+1. clone source
+2. $ composer update
+3. $ cp .env.example .env
+4. Cấu hình env
+	+ cấu hình db tới db của babyQuip
+5. php artisan key:generate
+6. php artisan migrate
+6. Tạo key broker
+	php artisan sso:broker:create {name}
+7. Cấu hình env cho baby-cleaning
+	+ #SSO
+		SSO_SERVER_URL=http://dev.sso.local      #Đường dẫn url hoặc virtual-host của source SSO
+		SSO_BROKER_NAME=Cleaning				 #Field 'name' trong table broker trong DB babyQuip
+		SSO_BROKER_SECRET=CFU9FQZCQEJe5ud73kjUoozGikM3lCc45eJNXsSK		#Field 'secret' trong table broker trong DB babyQuip 

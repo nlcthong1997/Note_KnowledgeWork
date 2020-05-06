@@ -94,4 +94,54 @@
 	Duy chuyên đến cuối dòng: $
 	Đi đến vị trí của 1 từ:  /từ 
 	
-	
+
+####################### SET UP VIRTUAL HOST ########################
+### Đặt source vào thư mục: 
+        cp source var/www/html/
+        
+### Cấp quyền sở hữu cho source: 
+        sudo chown -R $USER:$USER /var/www/html/source   # $USER: có nghĩa là user hiện tại đang được đang nhập hiện tại
+		
+### Cấp quyền cho thư mục source: 
+        sudo chmod -R 755 /var/www/html/source
+        
+### Tạo một file configuration cho để tạo virtual-host trong thư mục /etc/apache2/sites-available/
+        vd: touch /etc/apache2/sites-available/your_domain.conf
+        
+### Copy nội dung sau vào file your_domain.conf
+        <VirtualHost *:80>
+            ServerAdmin webmaster@localhost                 # Giữ nguyên hoặc edit thành webmaster@abc.com 
+            ServerName your_domain                          # URL trên browser:  abc.com
+            ServerAlias www.your_domain                     #                    www.abc.com
+            DocumentRoot /var/www/html/source/public        # Đường dẫn tới file index trong source laravel: var/www/html/source/public 
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+            <Directory /var/www/html/source>                # Đường dẫn tới source: /var/www/html/source
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Require all granted
+            </Directory>
+        </VirtualHost>
+        
+### Tạo host cho virtual-host vừa setup ở trên bằng cách chỉnh sửa file  /etc/hosts
+       sudo vim /etc/hosts    
+       #Thêm dòng 127.0.0.1     abc.com  
+
+### Kích hoạt file virtual-host vừa tạo lúc nãy là: /etc/apache2/sites-available/your_domain.conf
+        sudo a2ensite your_domain.conf
+        
+        sudo a2dissite 000-default.conf  # disable một file nào đó nếu cần chạy ở đây là file mặc định
+        
+### Kiểm tra setup có lỗi hay ko, nếu ko lỗi: #kết quả: Syntax OK
+        sudo apache2ctl configtest
+        
+### Khởi động lại apache2
+        sudo systemctl restart apache2
+
+### Cấp quyền cho thư mục storage
+		sudo chmod -R 777 ./storage
+		
+#########################################################################
+
+### Check user nào đang sử dụng apache
+		$ ps aux | egrep '(apache|httpd)'

@@ -1,0 +1,894 @@
+#
+  - tính insurance->amount của mỗi partner trong 1 tháng
+  - lưu vào bảng insurance_payment
+  - gửi mail thông báo về insurance->amount mà partner phải trả
+ 
+#
+  - lấy insurance->amount từ bảng insurance_payment
+  - thực hiện tính phí partner
+  		+ quy trình tổng quát
+			> cus --(payment)-> stripe of partner --(chuyển)--> card of partner --(chuyển)--> stripe of platform
+			> cus --(payment)-> stripe of partner --------------------------------(chuyển)--> stripe of platform
+			
+#
+  - insurance_payment
+  		+ id
+		+ partner_id
+		+ amount
+		+ insurance_period
+		+ notified_dtm
+		+ payment_dtm
+		+ status (notified, paid, error)
+		
+		
+		
+================ Babierge ================
+* DONE
+- Insurance
+	+ TP_Card 
+	
+* INPROGESS
+- Insurance (20%)
+
+================ Babierge ================
+* INPROGESS
+- Insurance (50%)
+  + Validate data update DB after send mail
+	+ Call API to transfer/charge all partners 
+  
+================ Babierge ================
+* INPROGESS
+- Create shell update transfer stripe_partner (40%)
+
+================ Babierge ================
+* DONE
+- Create shell update transfer stripe_partner
+
+* INPROGESS
+- Insureance (60%)
+  + Change condition: make month and year required
+  + Change content mail: add last 4 of bank account or credit card to email depending on is_transfer
+  + Change query: Find all with status Notified or (status = Failed && rerun_flag = true)
+  + Move amount insurance to config file.
+  
+================ Babierge ================
+* DONE
+- Fix error send mail to partner after edit profile
+
+================ Babierge ================
+*DONE
+- [Task] Feature delete item
+
+================ Babierge ================
+*DONE
+- Initialize partners with default items
+  + Create table default_item
+  + Create shell Import and mapping data into tables
+  
+================ Babierge ================
+*DONE 
+- ItemsComponent line 82 clogging up logs
+- Fix init test stripe shell
+
+================ Babierge ================
+*DONE 
+- [Task] Can't update item price to be fraction of dollar
+- Initialize partners with default items
+  + Create tables default_categories_items, default_categories_partners
+  
+================ Babierge ================
+*INPROGESS
+- Initialize partners with default items
+  + Add default_item_id to items_table
+  + Syntax to inject partner data for item fields
+  + set automate defaultItems and defaultCategoriesPartner for partner when create partner
+  
+================ Babierge ================
+*DONE
+- Initialize partners with default items
+  + Set automate default CategoriesItems for partner
+  + Refactor table defaultCategoriesItems
+  
+================ Babierge ================
+*INPROGESS
+- Super Admin Gift Card Search by Code Broken
+ + Fix search gift_codd by superadmin (done)
+ + Refactor LightrailValues => LightrailGiftValues in many Model and Table classes (30%)
+
+================ Babierge ================
+*DONE
+- Refactor locations shells
+- Insurance Followup
+  + Remove stripe_customer_id for US charges
+
+================ Babierge ================
+*INPROGESS
+- Retest gift_card for customer, partner, superAdmin (70%)
+
+================ Babierge ================
+*INPROGESS
+- Multi Order Modification (40%)
+  + Add items via ajax (done)
+  + Modify items quantity via ajax (done)
+
+================ Babierge ================
+*INPROGESS
+- Affiliates with discount not showing (60%)
+  + Refactor code (done)
+  + Clean data, test (40%)
+  
+================ Babierge ================
+*INPROGESS
+- Multi Order Modification
+  + Handle ajax delivery/charge (done)
+- Login with Google/Facebook not create account (50%)
+  + Fix login with Google (done)
+  + Login with facebook (20%)
+  
+================ Babierge ================
+*DONE
+- Edit affiliate screen not discount percent
+- Submit multiple first name user get error
+
+================ Babierge ================
+*DONE
+- Retest login with google/facebook
+- Edit Affiliate show wrong values
+  + Validation
+  + Test create affiliate
+  
+================ Babierge ================
+*DONE
+- Check if login with gmail returns name(s)
+
+================ Babierge ================
+*DONE
+- Fix validate discout percent affiliates
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (30%)
+ + Handle change rental date of customer (done)
+ + Handel change refund rental date in partner (10%)
+ 
+ ^([0]*|[1]{1}|[1]{1}(\.){1}[0]+|0{1}(\.){1}([^a-zA-z- \.\/!@#$%&*,=+_()])[0-9]+)$
+ 
+================ Babierge ================
+*DONE
+- Update create and delete affiliates, test create|edit|delete affiliates
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (30%)
+  + Handel change refund rental date in partner (solution building change function refund) (20%)
+
+================ Babierge ================
+*DONE
+- Should be able to enter is_public affiliates in checkout. If enter affiliate discount this way make sure to store affiliate_id on order record
+- Edit affiliate to has_discount can't select discountSellerLiability
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (30%)
+- Retest should be able to enter is_public affiliates in checkout (40%)
+
+================ Babierge ================
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (35%)
+- Refactor code validate affiliates in checkout (40%)
+- Retest should be able to enter is_public affiliates in checkout (70%)
+
+================ Babierge ================
+*DONE
+- Store all fields changeable of items to order items. Update all order summary views to use order_items
+- Add validation for edit function to validate amount, promo code, rental dates, reservation info changes
+*INPROGESS
+- Refactor code validate affiliates in checkout (40%)
+
+================ Babierge ================
+*DONE
+- Refactor code validate affiliates in checkout
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (40%)
+
+================ Babierge ================
+*INPROGESS
+- Enable one day rentals (push with Multi Order Modification) (40%)
+- ERD and new data model (15%)
+  + Rename promo_orders to order_promos, update codes (models, controllers, components...) (80%)
+  
+================ Babierge ================
+*DONE
+- ERD and new data model
+  + Rename promo_orders to order_promos, update codes (models, controllers, components...)
+  + Create order_changes table (merge columns of charges/refunds table, remove type, desc)
+  + Create order_change_actions table (id, order_change_id, desc)
+  + Create order_change_items table (order_item_id, quantity_changed)
+  + Add order_change_id into stripe_charges and stripe_refunds (after id)
+*INPROGESS
+- ERD and new data model 30(%)
+  + Remove charge_id in order_items, change charge_id to order_change_id in stripe_transfers and gift_charges, change refund_id to order_change_id in stripe_transfer_reversals and gift_refunds table. 
+  
+================ Babierge ================
+*DONE
+- ERD and new data model
+  + Rename babierge_payout to bq_payout of orders/charges/refunds table. Update codes (models, views, controllers, components,...)
+*INPROGESS
+- ERD and new data model 40(%)
+
+================ Babierge ================
+*DONE
+- ERD and new data model
+  + Create table, model, relationship for OrderChanges table
+- Retest post all form in partner
+
+================ Babierge ================
+*DONE
+- ERD and new data model
+  + Create shell update order items
+  + Update checkbox rental one day
+
+================ Babierge ================
+*INPROGESS
+- ERD and new data model
+  + Migrate data orderItems table to orderChangeItems (done)
+  + Migrate data orderItems table to orderItemsTemp (60%)
+  + Check data migrate (20%)
+  
+================ Babierge ================
+*DONE
+- ERD and new data model  
+  + Rename order_changes to order_actions, rename order_change_actions order_action_changes. Update in code
+- Soft Delete (install soft delete and check code)
+
+================ Babierge ================
+*DONE
+- Multi Order Modification
+ + Migrate rental length discount for orders
+ + Update migrate OrderActions
+ 
+================ Babierge ================
+*DONE
+- Update soft_delete, delete/add delivery_option, show all view delivery_options deleted
+
+================ Babierge ================
+*DONE
+- Multi Order Modification
+  + Test shell migrate data Charges into order_actions, order_action_changes, stripe_charges
+*INPROGESS
+- Multi Order Modification
+  + Test shell migrate Refunds 40(%)
+  
+================ Babierge ================
+*DONE
+- ERD and new data model
+  + Sync data amount_refunded stripe into stripe_charges
+
+*INPROGESS
+- Multi Order Modification
+  + Display descriptions in all views (30%)
+  
+================ Babierge ================
+*DONE
+- Multi Order Modification
+  + Display descriptions in all views
+
+*INPROGESS
+- Soft delete for items (40%)
+
+================ Babierge ================
+*DONE
+- Sync data amount_refunded stripe into stripe_charges in master
+- New Partners created without default_meta_*
+
+*INPROGESS
+- Debug warning error in logs ItemsComponent (40%)
+- Soft delete for items (40%)
+
+================ Babierge ================
+*DONE
+- Multi Order Modification
+  + Update financials page, use order actions in financials page instead of (charges + refunds). Recheck paginate, export csv function
+  
+================ Babierge ================
+*INPROGESS
+- Multi Order Modification
+  + Update transfer order function: No more charges/refunds. 
+    Create new order actions records for order transfer (40%)
+    
+================ Babierge ================
+*INPROGESS
+- Multi Order Modification
+  + Update transfer order function
+    Create new order actions records for order transfer (80%)
+  + Setup data and test transfer order (30%)
+  
+================ Babierge ================
+*INPROGESS
+- Multi Order Modification
+  + Testing new flow (5%)
+  
+================ Babierge ================
+*DONE
+- Multi Order Modification
+  + Create shell cleanup tables and columns
+*INPROGESS
+- Multi Order Modification
+  + Testing new flow (10%)
+  
+================ Babierge ================
+*DONE
+- Fix display view accept_transfer in partner
+- ERD and new data model
+  + Apply new model for transfer order feature
+*INPROGESS
+- Multi Order Modification
+  + Testing new flow (10%)
+  
+================ Babierge ================
+*DONE
+- Multi Order Modification
+  + Apply soft-delete into affiliates
+  + Display tax rate in view checkout and partner
+  + Fix data show in past-reservations
+  
+================ Babierge ================
+*INPROGESS
+- Integrate new design
+  + Integrate Header, Footer (70%)
+  + Integrate the design on mobile (5%)
+  
+================ Babierge ================
+*INPROGESS
+- Research code integrate hubs (40%)
+
+
+================ Babierge ================
+*INPROGESS
+- Research code integrate hubs, preparing data, review the old plugin BabiergeModel (70%)
+
+================ Babierge ================
+*INPROGESS
+- Apply hubs view, intergrate backend function
+
+================ Babierge ================
+*DONE
+- Edit header homepage and hubspage
+*INPROGESS
+- Research code apply search tag in hubs (20%)
+
+================ Babierge ================
+*DONE
+- Apply mapbox into hubs view, refactor code show providers
+*INPROGESS
+- Research code apply search tag in hubs (50%)
+
+
+================ Babierge ================
+*DONE
+- Apply css/js into hubs view.
+- Research code apply search tag in hubs
+*INPROGESS
+- Handle data search tag in hubs (40%)
+
+================ Babierge ================
+*DONE
+- Handle calender, search-tag in hubs view
+*INPROGESS
+- Aplly css for suggest search-tag in hubs view (85%)
+
+================ Babierge ================
+*DONE
+- Aplly css for suggest search-tag in hubs view
+*INPROGESS
+- Integrate view location (40%)
+
+================ Babierge ================
+*DONE
+- Integrate view location
+
+================ Babierge ================
+*INPROGESS
+- Integrate hubs view 80(%)
+
+================ Babierge ================
+*INPROGESS
+- Integrate hubs view 80(%)
+- Integrate detail_item view 60(%)
+
+================ Babierge ================
+*INPROGESS
+- Integrate detail_item view 70(%)
+- Preparing data for item view and detail_item view (30%)
+
+================ Babierge ================
+*DONE
+- Integrate detail_item view
+
+================ Babierge ================
+*DONE
+- Apply breadcrumb in detail_item page
+- Handle review items in provider page
+
+================ Babierge ================
+*INPROGESS
+- Check all pages on all devices
+- Check all the pages have been intergrate (60%)
+- Prepare data for the checkout-customer page (30%)
+
+================ Babierge ================
+*INPROGESS
+- Intergate categories link in provider page (40%)
+- Fix issue all pages from QA
+
+================ Babierge ================
+*INPROGESS
+- Intergate views checkout (30%)
+  + Checkout-customer
+  
+================ Babierge ================
+*INPROGESS
+- Intergate views checkout
+  + Checkout-customer/delivery (40%)
+  
+================ Babierge ================
+*DONE
+- Preparing js add items to cart 
+*INPROGESS
+- Intergate views checkout
+  + Checkout-customer/delivery (40%)
+  
+================ Babierge ================
+*DONE
+- Apply delivery surcharge for partner 
+*INPROGESS
+- Intergate views checkout
+  + Checkout-customer/delivery (45%)
+  
+================ Babierge ================
+*DONE
+- Refactor the code for Items to PartnerItems all page
+*INPROGESS
+- Intergate views checkout
+  + Checkout-customer/delivery (45%)
+  
+================ Babierge ================
+*DONE
+- Refactor location page, item page
+*INPROGESS
+- Testing PartnerItems all page (40%)
+
+================ Babierge ================
+*DONE
+- Fix add/remove/edit delivery_surcharge on partner
+- Intergate new design
+  + Handle active menu items on provider page, count items on location-search page 
+  
+================ Babierge ================
+*DONE
+- [Partner] [Edit item] The items can save successfully without the 'Rental Cost Per Day'
+- Recheck new design
+*INPROGESS
+- Intergrate cart page (30%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate cart page (60%)
+  + Handle add item to cart (done)
+  
+================ Babierge ================
+*INPROGESS
+- Intergrate cart page (65%)
+  + Handle edit cart page
+  + Aplly design cart page
+  
+================ Babierge ================
+*INPROGESS
+- Intergrate cart page (70%)
+
+================ Babierge ================
+*DONE
+- Update display Additional Delivery Settings
+*INPROGESS
+- Intergrate cart page (85%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate sign-up page (70%)
+- Intergrate cart page (90%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate checkout contact (40%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate checkout contact (50%)
+- Intergrate checkout delivery (40%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate checkout contact (70%)
+- Intergrate checkout delivery (60%)
+
+================ Babierge ================
+*INPROGESS
+- Intergrate checkout contact (80%)
+- Intergrate checkout delivery (80%)
+
+================ Babierge ================
+*DONE
+- Handle add child on checkout contact
+*INPROGESS
+- Fix bug display on UI
+
+================ Babierge ================
+*INPROGESS
+- Testing new design
+- Fix bug UI, bug from QC
+
+================ Babierge ================
+*INPROGESS
+- Testing, fix bug UI, bug from QC
+
+================ Babierge ================
+*DONE
+- Create order_addresses table
+- Add is_default column to hubs_partners table
+*INPROGESS
+- Testing, fix bug UI, bug from QC
+
+================ Babierge ================
+*INPROGESS
+- Fix bugs and testing feedback from usersnap
+
+================ Babierge ================
+*DONE
+- Fix bug after apply promo not show button checkout/add-items
+- Create migrate and shell for delivery_geo_location
+
+================ Babierge ================
+*DONE
+[Work Flow] [Cart] Should keep the number of the rental after adding a new item(s)
+[Super Admin] 'Customer Discount Message' field should be required when creating an affiliates
+Fix bugs from QC, usersnap
+  + Fix show recommend items after click "pick up local"
+  + Fix show info at cart, view mobile when click "pick up local"
+  
+================ Babierge ================
+*DONE
+- Change all links in product pages
+*INPROGESS
+- Testing and fix bugs form usersnap
+================ Babierge ================
+*DONE
+- Change content learn more pages
+  + Cribs, Strollers, Car Seats, Feeding, Bathing
+  
+================ Babierge ================
+*DONE
+- Check and fix bugs from bugherd
+  + signup, press, faqs, cribs, bathing
+  
+================ Babierge ================
+*DONE
+- Partner
+ + Migrate from short serving message to short_description
+ + Migration from sold out messaging to special_message
+ + Migration long_description
+ + Character limit in fields
+ 
+================ Babierge ================
+*DONE
+- Bugherd #103 Remove items and then empty cart will redirect provider page
+- Changing the action will change the quantity number on the header page
+
+================ Babierge ================
+*DONE
+- Update Bugherd #103 Remove items and then empty cart will redirect provider page
+
+================ Babierge ================
+*DONE
+- Create migrate transfer data for column long_description partner table
+- Bugherd #136 remove all links in the image on the homepage
+
+================ Babierge ================
+*DONE
+- Fix bug on bugherd #174
+- Handle daterangepick follow partner vacations
+*INPROGESS
+- Checking feedback from bugherd
+
+================ Babierge ================
+*DONE
+- Fix bug on bugherd #187, #206, #207, #210
+- Cross out vacation dates and if partner.allow_same_day_order is false then also cross out current date
+*INPROGESS
+- Remove script when render view ajax (20%)
+
+================ Babierge ================
+*DONE
+- Fix bugs on bugherd #259, #231, #233, #175, #236, #260, #250->258, #234, #232, #206, #207, #210
+- Fix daterangepick in cart page
+- Find and remove ssesion reserveInfoList
+*INPROGESS
+- Remove script when render view ajax (30%)
+==================== Babierge ====================
+*DONE
+- Fix bug on bugherd #261
+- Remove notification in cart when customer perform new actions
+*INPROGESS
+- Follow issues on bugherd
+
+==================== Babierge ====================
+*DONE
+- Make sure defaults for new delivery fields are correct
+*INPROGESS
+- Follow issues on bugherd
+
+==================== Babierge ====================
+*DONE
+- Fixed bugs on bugherd #337-333, #329, #328, #325-323, #320-318, #316, #313, #311-309, #304
+*INPROGESS
+- Follow issues on bugherd
+
+==================== Babierge ====================
+*DONE
+- Handle add/remove childs option on contact page
+- Fixed bugs on bugherd: 398, 384, 378-374, 372-370, 368, 366
+*INPROGESS
+- Finxing bug on bugherd: 373
+- Follow issues on bugherd
+==================== Babierge ====================
+*DONE
+- Fixed bugs on bugherd 415, 290, 303
+- Add is_primary to hubs_partners type boolean default = false not null
+- Review not display correct order of review information
+
+==================== Babierge ====================
+*DONE
+- Update copy of delivery ? from cart onward
+- Update categorys for partner
+- Fixed bugs on bugherd 376, 233, 206, 482, 490->492, 384, 374
+
+==================== Babierge ====================
+*DONE
+- Update delivey settings pages for /partner
+- Categories sort broken. Need verify that new categories display.
+- Don't show list of tags with is_public = false in /partner/items/edit/*
+- Fix show tag on items page for partner
+- Fixed bugs on bugherd 505, 500
+
+==================== Babierge ====================
+*DONE
+- Fixed bugs on bugherd 528, 534, 535
+- Show avg_testimonial_value on mobile prvider page
+*INPROGESS
+- Testing and follow issues on bugherd
+
+==================== Babierge ====================
+*DONE
+- Show testimonial with conditions 
+- Remove display of avg review and reviews total on /hubs /locatinon-search when partner has 0 review
+*INPROGESS
+- Follow issues on bugherd
+
+==================== Babierge ====================
+*DONE
+- Display long description in profile partner on mobile
+- Test add/remove categorys of partner admin
+*INPROGESS
+- Follow issues on bugherd
+
+
+==================== Babierge ====================
+*DONE
+- Fix warning errors when customer logged in to view their orders in dashboard
+*INPROGESS
+- Fix warning errors in /contact page
+
+==================== Babierge ====================
+*DONE
+- Add new cleaning page, update homepage
+- Fix warning errors in /contact page
+  + Fix currency for review-changes
+*INPROGESS
+- Fix warning errors in /contact page
+  + debug logs for contact/signup
+  
+==================== Babierge ====================
+*DONE  
+- Add new cleaning page, update homepage
+- Warning errors about currency when review order without changing totals
+INPROGESS
+- Two order actions with type = Cancel for this order_id
+
+
+==================== Babierge ====================
+*DONE 
+- Updated news for "/press" and "/pressAll"
+- Updated feedback from "Add new cleaning page, update homepage"
+- Created shell "Two order actions with type = Cancel for this order_id"
+
+==================== Babierge ====================
+*DONE 
+- Payout no data
+  + Migration update stripe_payout_ids of stripe_transfers/stripe_transfer_reversals/insurance_payment to string column
+  + Update flow save, display payout matching stripe_payout_id from text/json column
+  + Shell to update stripe_payout_id in case many payouts same balance transactions
+ 
+ 
+==================== Babierge ====================
+*DONE  
+ - Add new cleaning page, update homepage
+ + Add new text content header
+ 
+ 
+==================== Babierge ====================
+*DONE  
+- Shell create default shopping item and default item tag
+*INPROGESS
+- Shell create shopping item and shopping item tag for all current partners
+  
+==================== Babierge ====================
+*DONE
+- Intergrate personal-shopping page.
+- Update cost-purchase for item shopping 
+
+==================== BabyQuip ====================
+*DONE
+- Implement client's feedback for /personal-shopping page
+- Update conditions check shopping item in views
+- Fix bugs from QA
+  + Partner module: 'Personal Shopping' item shows the wrong price and type of item when a user performs a search function
+  + The purchase items display wrong in 'Cart' page, 'Email' and 'Confirmation' page.
+  + The total of order doesn't display when the user order on mobile device
+* IN-PROGRESS
+- Fix bugs from QA
+
+==================== BabyQuip ====================
+*DONE
+- Refactor /personal-shopping page
+- Update conditions show items cart
+
+==================== BabyQuip ====================
+*DONE
+- Implement Consumable Flow
+  + Use is_editable concept to force partner not able to edit/delete
+- Update landing page on /personal-shopping
+
+*IN-PROGESS
+- Implement Consumable Flow
+  + Update conditions display purchase items in views/emails of checkout flow
+
+
+
+==================== BabyQuip ====================
+*DONE  
+- Implement Consumable Flow
+  + Update conditions display purchase items in views/emails of checkout flow
+- Remove quantity select from view item page, cart page if item is "Personal Shopping Service"
+- Load items for all partner, make it at top of list of most-rented
+- Update condition edit item detail for partner
+
+* IN-PROGRESS
+- Fix bugs from QA
+
+
+==================== BabyQuip ====================
+*DONE
+- Custom refund:
+    + Migration add is_editable to orders table
+    + Update validate check order is editable in Partner/OrdersController
+- Fix bugs from QA
+    + Update condition in view email for task "The transfer email displayed wrong 'Personal Shopping Service' item"
+
+* IN-PROGRESS
+- Custom refund:
+    + Update views
+    
+==================== BabyQuip ====================
+*DONE
+- Custom refund:
+    + Test flow for order cancel/refund
+    + Update validate order cancel/refund
+
+
+==================== BabyQuip ====================
+*DONE
+- Move purchase surcharge to "Taxes & Fees"
+- Small Consumable design updates
+- Fix bugs from QA
+    + [Customer module] [/dashboard] The 'Order Details' shows error code when the user clicks 'View Details' button
+    + [Partner module] [Modify order] The 'Search' field doesn't display suggestions when users search for the second item
+
+* IN-PROGRESS
+- Research Laravel, Vuejs
+
+
+==================== BabyQuip ====================
+*DONE
+- Create Laravel Demo Project.
+    + Handle action login use Auth of laravel, mirgration DB, handle middleware.
+    
+*IN-PROGRESS
+- Create Laravel Demo Project.
+    + Create action register/logout, relationship table
+- Research vue js
+
+==================== BabyQuip ====================
+*DONE
+- Implement client feedback: Two order actions with type = Cancel for this order_id
+    + Create shell cleanup data order_actions
+    + Test data for order_actions, stripe_refunds, stripe_transfer_reversals
+    
+*IN-PROGRESS
+- Create Laravel Demo Project.
+    + Create action register/logout, relationship table
+    
+==================== BabyQuip ====================
+*DONE
+- Two order actions with type = Cancel for this order_id
+    + Compare result from sheet before and after running queries
+-Create Laravel Demo Project.
+    + Create action register/logout, relationship table
+    
+*IN-PROGRESS
+- Research use vue-js in laravel
+
+
+==================== BabyQuip ==================== 
+*IN-PROGRESS
+- Create Laravel mix Vue demo Project
+    + Build SPA with Vue (done)
+    + Handle api
+- Research use vue-js in laravel
+
+==================== BabyQuip ==================== 
+*IN-PROGRESS
+- Create Laravel mix Vue demo Project
+    + Handle api and create seeder
+    + Create UI and bindding data in Vue demo
+- Research use Vuejs in laravel
+
+==================== BabyQuip ==================== 
+*IN-PROGRESS
+- Customer Checkout Flow
+    + Implement home page
+    
+==================== BabyQuip ====================
+*DONE 
+- Customer Checkout Flow
+    + Home page
+
+*IN-PROGRESS
+- Partner Modify Order Flow
+    + Dashboard (80%)
+    
+==================== BabyQuip ====================
+* DONE 
+- Seed data for implementing without finishing checkout flow
+- Partner Modify Order Flow
+    + Integrate UI dashboard, reservation, setting
+
+* IN-PROGRESS
+- Integrate data for dashboard and resevation page
+
+
+==================== BabyQuip ====================
+* DONE 
+- Partner modify Order Flow
+    + Integrate dashboard and appointment page
+
+* IN-PROGRESS
+- Partner modify Order Flow
+    + Integrate setting page
+    
+
+==================== BabyQuip ====================
+* DONE 
+- Partner modify Order Flow
+    + Update migrate partner
+
+* IN-PROGRESS
+- Partner modify Order Flow
+    + Handle settings page with mapbox
+    
+==================== BabyQuip ====================
+* DONE 
+- Partner modify Order Flow
+    + Settings page

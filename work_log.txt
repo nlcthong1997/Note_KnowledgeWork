@@ -11,7 +11,6 @@
 ### Cap quyen cho thu file/folder: > sudo chmod -R [777] [/var/www/html]
 ### Tim 1 chuoi o bat ki dau: grep -ri ["X-Frame-Options"] [/etc/apache2]
 
-
 ############################### SQL ################################
 ### Dang nhap vao sql: > mysql -u root -p
 ### Xem Ds database: > show databases;
