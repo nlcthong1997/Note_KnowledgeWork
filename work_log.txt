@@ -2,7 +2,7 @@
 ### create ssh-key follow mail git: > ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ### get ssh-key: > cat ~/.ssh/id_rsa.pub
 
-######### APACHE2 #########
+######### APACHE2 ##########
 ### start: > sudo service apache2 start
 ### restart: > sudo service apache2 restart
 
