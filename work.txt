@@ -1,0 +1,94 @@
+#create ssh-key follow mail git: 
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+#get ssh-key:
+cat ~/.ssh/id_rsa.pub
+
+#su dung mysql cmd:
+- dang nhap vap mysql: mysql -uroot -p
+- xem danh sach db: show databases;
+- tao mot db moi: create database name;
+- su dung mot db nao do: use name;
+- import file sql vao db: source /path... (ko co dau nhau don)
+
+or: mysql -uroot -p -f -D databaseName < "path"
+
+
+
+#link git babyquip
+git clone git@github.com:babierge/babierge-platform.git
+
+
+##sso dev
+SSO_SERVER=http://dev-sso.babyquip.com
+SSO_BROKER_ID=Babyquip
+SSO_BROKER_SECRET=DmIy7KlWBm38VyHhlzRFSsYN7ursuIC5iDqv18ik
+
+#stripe_partner
+acct_1EkY8oCDwjxW9vCT
+
+
+#SET UP SOURCE CODE BABYQUIP
+- Tai va cai dat "xampp" (php v7.2, mariadb v10 hoac mysql v5.7)
+- Cai dat "Git"
+- Clone source ve thu muc C:/xampp/htdocs/"source-code"
+- Khoan chay xampp hoac "stop" dich vu apache va mysql dang chay
+- Cau hinh tap tin xampp/php/php.ini (bo comment dong: extension=intl)
+- Tai va Cai dat composer
+- Dung tai thu muc C:/xampp/htdocs/source-code chay "composer update"
+- Vao "source-code/config" copy file "social_networks.php.default.php" thanh mot file khac va doi ten "social_network.php"
+- Vao "source-code/config" copy file ".env.default" thanh mot file khac va doi ten ".env" va cau hinh nhung gi can thiet
+- Chay "xampp" bang quyen admin va start "mysql"
+- Mo shell tren "xampp" va dang nhap vao mysql tao va imp DB
+- Cau hinh file .env
+- Cau hinh hosts ao vao duong dan C:\Windows\System32\drivers\etc\hosts
+	+ Them dong sau: 127.0.0.1	babyquip.dev.com
+- Cau hinh apache vao duong dan C:\xampp\apache\conf\extra\httpd-vhosts.conf
+	+ Cau hinh host
+		<VirtualHost *:80>
+			DocumentRoot "C:/xampp/htdocs/babierge-platform/webroot"
+			ServerName babyquip.dev.com
+			<Directory "C:/xampp/htdocs/babierge-platform/webroot">
+				Options +Indexes +Includes +FollowSymLinks +MultiViews
+				AllowOverride All
+				Require local
+			</Directory>
+		</VirtualHost>
+	+ Neu can cau hinh them ssl (https)
+		<VirtualHost *:443>
+			DocumentRoot "C:/xampp/htdocs/babierge-platform/webroot"
+			ServerName babyquip.dev.com
+			<Directory "C:/xampp/htdocs/babierge-platform/webroot">
+				Options +Indexes +Includes +FollowSymLinks +MultiViews
+				AllowOverride All
+				Require local
+			</Directory>
+		</VirtualHost>
+
+- Cau hinh xdebug (Lam theo https://gist.github.com/odan/1abe76d373a9cbb15bed)
+	+ Neu trong C:\xampp\php\ext\ da co file "php_xdebug" thi can phai tai ve.
+	+ Tai file xdebug.dll va luu o C:\xampp\php\ext
+	+ Mo file C:\xampp\php\php.ini va comment dong "output_buffering = Off"
+	+ Luu doan o cuoi file C:\xampp\php\php.ini
+		[XDebug]
+		zend_extension = "c:\xampp\php\ext\php_xdebug.dll"
+		;zend_extension = "c:\xampp\php\ext\php_xdebug-2.9.4-7.4-vc15-x86_64.dll"
+		xdebug.remote_autostart = 1
+		xdebug.profiler_append = 0
+		xdebug.profiler_enable = 0
+		xdebug.profiler_enable_trigger = 0
+		xdebug.profiler_output_dir = "c:\xampp\tmp"
+		;xdebug.profiler_output_name = "cachegrind.out.%t-%s"
+		xdebug.remote_enable = 1
+		xdebug.remote_handler = "dbgp"
+		xdebug.remote_host = "127.0.0.1"
+		xdebug.remote_log = "c:\xampp\tmp\xdebug.txt"
+		xdebug.remote_port = 9000
+		xdebug.trace_output_dir = "c:\xampp\tmp"
+		;36000 = 10h
+		xdebug.remote_cookie_expire_time = 36000
+	+ setup tren php storm
+
+		
+	
+
