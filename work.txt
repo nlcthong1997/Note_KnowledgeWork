@@ -18,6 +18,12 @@ or: mysql -uroot -p -f -D databaseName < "path"
 #link git babyquip
 git clone git@github.com:babierge/babierge-platform.git
 
+#link git babyquip html
+git clone git@github.com:babierge/babyquip-html.git
+
+#link git baby cleaning
+git clone git@github.com:babierge/babyquip-cleaning.git
+
 
 ##sso dev
 SSO_SERVER=http://dev-sso.babyquip.com
@@ -88,6 +94,12 @@ acct_1EkY8oCDwjxW9vCT
 		;36000 = 10h
 		xdebug.remote_cookie_expire_time = 36000
 	+ setup tren php storm
+
+
+		
+	
+
+
 
 		
 	
