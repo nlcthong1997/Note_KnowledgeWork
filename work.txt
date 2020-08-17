@@ -35,7 +35,7 @@ SSO_BROKER_SECRET=DmIy7KlWBm38VyHhlzRFSsYN7ursuIC5iDqv18ik
 acct_1EkY8oCDwjxW9vCT
 
 
-#SET UP SOURCE CODE BABYQUIP
+#SET UP SOURCE CODE BABYQUIP (cakephp)
 - Tai va cai dat "xampp" (php v7.2, mariadb v10 hoac mysql v5.7)
 - Cai dat "Git"
 - Clone source ve thu muc C:/xampp/htdocs/"source-code"
@@ -96,7 +96,29 @@ acct_1EkY8oCDwjxW9vCT
 		xdebug.remote_cookie_expire_time = 36000
 	+ setup tren php storm
 	
-#SETUP BABY CLEANING
+#SETUP BABY CLEANING (laravel)
+- Clone source ve tai thu muc: C:/xampp/htdocs/"source-code"
+- Tai thu muc C:/xampp/htdocs/"source-code"/storage
+	+ Tao thu muc bang lenh nhu sau:  mkdir -p framework/{sessions,views,cache}
+	+ Cap quyen: chmod -R 777 framework
+- Kiem tra "memory_limit" trong C:\xampp\php\php.ini co du lon ko, neu ko "memory_limit=2048M"
+- Dung tai thu muc C:/xampp/htdocs/source-code chay "composer update"
+- Cau hinh file .env
+- Mo shell tren "xampp" va dang nhap vao mysql tao va imp DB
+- Cau hinh hosts ao vao duong dan C:\Windows\System32\drivers\etc\hosts
+	+ Them dong sau: 127.0.0.1	baby-cleaning.dev.com
+- Cau hinh apache vao duong dan C:\xampp\apache\conf\extra\httpd-vhosts.conf
+	+ Cau hinh host
+		<VirtualHost *:80>
+			DocumentRoot "C:/xampp/htdocs/babyquip-cleaning/public"
+			ServerName baby-cleaning.dev.com
+			<Directory "C:/xampp/htdocs/babyquip-cleaning/public">
+				Options +Indexes +Includes +FollowSymLinks +MultiViews
+				AllowOverride All
+				Require local
+			</Directory>
+		</VirtualHost>
+
 
 ######################Laravel
 0/ Chay queue: php arisan queue:work
