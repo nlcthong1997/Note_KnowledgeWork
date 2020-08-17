@@ -102,6 +102,7 @@ acct_1EkY8oCDwjxW9vCT
 	+ Tao thu muc bang lenh nhu sau:  mkdir -p framework/{sessions,views,cache}
 	+ Cap quyen: chmod -R 777 framework
 - Kiem tra "memory_limit" trong C:\xampp\php\php.ini co du lon ko, neu ko "memory_limit=2048M"
+- Cau hinh tap tin xampp/php/php.ini (bo comment dong: extension=intl)
 - Dung tai thu muc C:/xampp/htdocs/source-code chay "composer update"
 - Cau hinh file .env
 - Mo shell tren "xampp" va dang nhap vao mysql tao va imp DB
