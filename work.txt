@@ -13,7 +13,8 @@ cat ~/.ssh/id_rsa.pub
 
 or: mysql -uroot -p -f -D databaseName < "path"
 
-
+#kiem tra memory_limit php
+php -r "echo ini_get('memory_limit').PHP_EOL;"
 
 #link git babyquip
 git clone git@github.com:babierge/babierge-platform.git
@@ -94,13 +95,63 @@ acct_1EkY8oCDwjxW9vCT
 		;36000 = 10h
 		xdebug.remote_cookie_expire_time = 36000
 	+ setup tren php storm
-
-
-		
 	
+#SETUP BABY CLEANING
 
-
-
+######################Laravel
+0/ Chay queue: php arisan queue:work
+1/ Seeder: là file tạo ra dữ liệu giả để import vào database, thuận tiện khi ta không cần phải nhập tay vào database từng record
+		Tạo seeder:
+			$ php artisan make:seeder <Name>TableSeeder
+		Chạy seeder:
+			$ php artisan db:seed --class=<Name>TableSeeder
 		
+		Làm mới cơ sở dữ liệu và chạy tất cả seeder
+			$ php artisan migrate:refresh --seed
 	
+2/ Migrate: là file ta định nghĩa khung cho table hoặc các field trong table để khi chạy file sẽ tiến hành tạo table hoặc update cho table vào database.
+	Tạo migrate:
+		$ php artisan make:migration create_<Table>_table --create=<Table>
+	Rollback migrate:
+		$ php artisan migrate:rollback
+			or
+		$ php artisan migrate:rollback --step=<Number> 	//step quay lại trước đó Number lần
+	Chạy migrate:
+		$ php artisan migrate
+	Chạy migrate không có cảnh báo cho dù có xảy ra lỗi:
+		$ php artisan migrate --force	
+		
+		
+######################Cakephp
+#Thêm vào trước câu update: SET SQL_SAFE_UPDATES = 0;
 
+#Chạy queue: bin/cake queue runworker -q
+
+#Xóa cache:      bin/cake cache clear_all
+
+#Tạo migrate:    bin/cake migrations create migrationsName (viet hoa chu cai dau tien)
+#Trang thai migrate:     bin/cake migrations status
+#Chay migrate:   bin/cake migrations migrate
+ 
+#Chạy shell:  bin/cake [className] [function]
+
+#lisa peek dev
+partner1@demo.com/ Password@1234
+
+#laura dev
+partner@demo.com/ Password@1234
+
+
+#Update cho items sap het trong kho
+SET SQL_SAFE_UPDATES = 0;
+Update babyquip.partner_items set qty = 999 where is_limit_inventory = 0;
+
+#
+-- ALTER TABLE orders CHANGE `rental_type` `rental_type` varchar(255) null; 
+-- UPDATE orders SET rental_type = 'Vacation Rental (AirBnB, VRBO, etc.)' WHERE rental_type = 'Vacation Rental (AirBnB,'
+
+# valid item
+$this->Item->isValidInventory
+
+#đăng ký controller trong component
+$controller = $this->_registry->getController();
