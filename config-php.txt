@@ -1,0 +1,116 @@
+Check list setup
+- Type, version DATABASE ?
+- Version PHP ?
+- Install XAMPP ?
+- Install GIT ?
+- Account GIT ? ssh GIT
+- Install COMPOSER ?
+- Install PHPSTORM ?
+
+Step setup project (Laravel)
+- Create account git or create ssh connect git
+	+ Create account:
+	+ Create/get ssh:
+		1.Create: ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+		2.Get: cat ~/.ssh/id_rsa.pub
+- Setup environment in xampp
+	+ Clone source to the directory C:\xampp\htdocs
+	+ Stop apache if it's running
+	+ Config PHP
+		1.At C:\xampp\php\php.ini, find and uncomment "extension=intl"
+		2.At C:\xampp\php\php.ini, find and edit memory to "memory_limit=2048M"
+	+ Make storage and authorization for directory source
+		1.At C:\xampp\htdocs\{source}\storage, run command "mkdir -p framework/{sessions,views,cache}"
+		2.At C:\xampp\htdocs\{source}\storage, run command "chmod -R 777 framework"
+	+ Config source 
+		1.At C:\xampp\htdocs\{source} run command "composer update"
+		2.Update file .env (necessary)
+	+ Config mysql
+		1.Open command shell on tool xampp
+		2.Mysql command:
+			+ mysql -uroot -p
+			+ show databases;
+			+ create database {NAME};
+			+ use {NAME}
+			+ source {path for file sql import}
+	+ Setup virtual host link to source	
+		1.At C:\Windows\System32\drivers\etc\hosts at line "127.0.0.1	abcxyz.com"
+	+ Setup apache for source
+		1.At C:\xampp\apache\conf\extra\httpd-vhosts.conf
+			<VirtualHost *:80>
+				DocumentRoot "C:/xampp/htdocs/{source}/public"
+				ServerName abcxyz.com
+				<Directory "C:/xampp/htdocs/{source}/public">
+					Options +Indexes +Includes +FollowSymLinks +MultiViews
+					AllowOverride All
+					Require local
+				</Directory>
+			</VirtualHost>
+		2.At C:\xampp\apache\conf\extra\httpd-vhosts.conf (necessary)
+			<VirtualHost *:443>
+				DocumentRoot "C:/xampp/htdocs/{source}/public"
+				ServerName abcxyz.com
+				<Directory "C:/xampp/htdocs/{source}/public">
+					Options +Indexes +Includes +FollowSymLinks +MultiViews
+					AllowOverride All
+					Require local
+				</Directory>
+			</VirtualHost>
+			
+	**DocumentRoot, Directory: need link to folder have file index.php
+
+Step setup XDebug
+- Setup Xdebug follow (https://gist.github.com/odan/1abe76d373a9cbb15bed)
+	+ If at directory C:\xampp\php\ext\ had "php_xdebug.dll" then not download
+	+ If at directory C:\xampp\php\ext\ not exists "php_xdebug.dll" then download file ~ (php_xdebug-2.9.4-7.4-vc15-x86_64.dll)
+	+ Config PHP:
+		1.At C:\xampp\php\php.ini, comment line "output_buffering = Off"
+		2.Save the pararap end to file C:\xampp\php\php.ini
+			[XDebug]
+			zend_extension = "c:\xampp\php\ext\php_xdebug.dll"
+			;zend_extension = "c:\xampp\php\ext\php_xdebug-2.9.4-7.4-vc15-x86_64.dll"
+			xdebug.remote_autostart = 1
+			xdebug.profiler_append = 0
+			xdebug.profiler_enable = 0
+			xdebug.profiler_enable_trigger = 0
+			xdebug.profiler_output_dir = "c:\xampp\tmp"
+			;xdebug.profiler_output_name = "cachegrind.out.%t-%s"
+			xdebug.remote_enable = 1
+			xdebug.remote_handler = "dbgp"
+			xdebug.remote_host = "127.0.0.1"
+			xdebug.remote_log = "c:\xampp\tmp\xdebug.txt"
+			xdebug.remote_port = 9000
+			xdebug.trace_output_dir = "c:\xampp\tmp"
+			;36000 = 10h
+			xdebug.remote_cookie_expire_time = 36000
+			
+- Setup for PHPSTORM
+	... link
+- Setup for VISUAL CODE
+	+ Install visual code
+	+ Install plugin PHP Debug (by Flix Becker)
+	+ At tool visual code
+		1. (Ctrl + Shift + D)
+		2. Click to: "create a launch.json file" => popup select environment showing and we need choose PHP
+	+ How to run:
+		1.Ad break debug to line code
+		2.Click Start debug (F5)
+		3.F5 browser
+
+
+		
+If run xdebug with POSTMAN
+- Add XDEBUG_SESSION_START=PHPSTORM as query parameter to the url, e.g.	(ex: http://localhost?XDEBUG_SESSION_START=PHPSTORM)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
