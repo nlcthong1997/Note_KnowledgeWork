@@ -1,0 +1,55 @@
+## self
+  + gọi các thành phần tĩnh trong class (được khai báo static)
+  + gọi được phương thức bình thường trong class
+  + GỌI ĐẾN ĐỐI TƯỢNG KHAI BÁO NÓ
+
+  vd:
+  class A {
+	public function get() {
+		return 'Day la lop A';
+	}
+	
+	public function showOne() {
+		echo $this->get();
+	}
+	
+	public function showTwo() {
+		echo self::get();
+	}
+  }
+  
+  class B extend A {
+	public function get() {
+		return 'Day la lop B';
+	}
+  }
+  
+  $b =  new B();
+  $b->showOne(); //Day la lop B
+  $b->showTwo(); //Day la lop A
+
+
+## static
+  + khi biến được khai báo với từ khóa statis (tĩnh), và dù được xử lý ở bất cứ file nào đi nữa (trong cùng 1 chương trình) thì nó sẽ lưu lại giá trị cuối cùng nó nhận được
+  + gọi thuộc tính static trong class
+	_ self::{thuộc tính/phương thức}
+	_ className::{thuộc tính/phương thức}
+  + gọi thuộc tính static ngoài class
+	_ className::{thuộc tính/phương thức}
+
+
+## final
+  + khi class được khai báo FINAL thì không có class nào có thể kế thừa được nó
+  + khi phương thức là final thì nó sẽ không thể bị override
+
+## $this
+  + $this KHÔNG SỬ DỤNG được trong PHƯƠNG THỨC static (tĩnh)
+  + $this KHÔNG GỌI được THUỘC TÍNH static (tĩnh) 
+
+## interface
+  + chỉ khai báo phương thức
+  + định nghĩa cho một đối tượng sử dụng biết và hình dung có bao nhiêu phương thức sẽ có 
+  
+  
+## abstract 
+
