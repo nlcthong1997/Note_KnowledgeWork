@@ -104,7 +104,64 @@ If run xdebug with POSTMAN
 			
 			
 			
-			
+SETUP MONGO FOR PHP (LARAVEL)
+1/ cai dat them file "php_mongodb.dll" vao thu muc C:\xampp\php\ext
+	link tai: https://pecl.php.net/package/mongodb (chon theo version php trong xampp)
+	
+	***tai dung phien ban php va hdh windows
+
+2/ trong php.ini 
+	them line : extension=php_mongodb.dll truoc line  extension=mysqli
+	
+3/ download mongodb ve may
+	- link tai: https://www.mongodb.com/try/download/community
+	- sau khi cai dat xong ta thuc hien cac buoc
+		+ vao thu muc C:\Program Files\MongoDB\Server\4.4\bin cua mongo va mo cmd len
+		+ chay lenh "mongod" 
+			=> neu co exception bao loi "C:\\data\\db" 
+			=> ta tien hanh tao thu muc "C:\\data\\db" va chay lai lenh "mongod" 
+		
+		
+4/ setup cho laravel
+	- link follow: https://github.com/jenssegers/laravel-mongodb
+	- chay composer require jenssegers/mongodb ^3.6 (^version dua vao bang so sanh cua document)
+	
+	- them vao file config/database.php
+		'default' => env('DB_CONNECTION', 'mongodb'),
+	
+	- them vao file config/database.php o 'connections'
+		'mongodb' => [
+            'driver' => 'mongodb',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', 27017),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'options' => [
+				'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
+            ],
+        ],
+		
+	- them vao file config/app.php o phan 'providers'
+		//Mongodb
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+		
+	- Su dung o model
+		+ auth
+			use Jenssegers\Mongodb\Auth\User as Authenticatable;
+			class User extends Authenticatable {
+				...
+				protected $connection = 'mongodb';
+	
+		+ ko auth
+			use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+			class User extends Eloquent {
+				...
+				protected $connection = 'mongodb';
+	
+	- env
+		DB_CONNECTION=mongodb
+		DB_PORT=27017
 			
 			
 			
