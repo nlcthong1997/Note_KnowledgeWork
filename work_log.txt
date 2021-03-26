@@ -41,6 +41,19 @@
     - $ git merge <name_branch>
 ### Check các branch hiện tại trên remote và dưới local
 	- $ git branch -a
+### Quay về trước đó một commit và push khi lỡ push commit sai lên
+	- $ git reset --hard HEAD^
+	  hoặc
+	- $ git reset --hard HEAD~1 (nếu quay về 2 commit: HEAD~2)
+	  hoặc
+	- $ git reset --hard <commit-id>
+	
+	- $ git add .
+	- $ git commit -m""
+	- $ git push -f origin <branch> (ép remote sẽ theo local)
+### add hết thây đổi nhưng chừa 1 file nào đó lại
+	- $ git add -u
+	- $ git reset -- <file>
 	
 ### Config username email
 	- $ git config user.name "test"
