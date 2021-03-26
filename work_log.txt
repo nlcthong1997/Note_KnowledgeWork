@@ -17,6 +17,7 @@
 ### Tao database: > create database [databaseName];
 ### Su dung database: > use [databaseName];
 ### Import tu file sql: > source [path file database]; (bo dau nhay don '')
+### Xóa database: > drop database [databaseName];
 
 ############################### Git #######################################
 ### Tắt addfile trong webroot: > sudo nano .git/config
