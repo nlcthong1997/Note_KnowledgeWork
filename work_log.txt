@@ -88,6 +88,10 @@
 	* Trong quá trình rebase nếu có lỗi hay vấn đề gì khá, ta có thể hủy rebase, nếu ko chắc abort quay về trạng thái ban đầu
 	thì có thể xóa nhánh A dưới local rồi pull về lại nhánh A đã push ở bước 1
 		- git rebase --abort
+		
+### .gitignore not working
+	$ git rm -rf --cached .
+	$ git add .
     
 ####################### Cac lenh commandline tren Ubuntu ##########################
 ### Thu muc mat dinh Home bat dau bang ki tu: ~
