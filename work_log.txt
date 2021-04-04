@@ -92,6 +92,12 @@
 ### .gitignore not working
 	$ git rm -rf --cached .
 	$ git add .
+	
+### Đăng nhập một lần vào git trên ubutun
+	$ git config credential.helper store
+	$ git push http://example.com/repo.git
+	Username: <type your username>
+	Password: <type your password>
     
 ####################### Cac lenh commandline tren Ubuntu ##########################
 ### Thu muc mat dinh Home bat dau bang ki tu: ~
