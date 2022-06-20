@@ -1,0 +1,108 @@
+############################### Git #######################################
+### Tắt addfile trong webroot: > sudo nano .git/config
+    Sửa line: filemode = false   
+	
+### Cập nhật tất cả thay đổi trên remote: 
+    - $ git fetch
+	
+### Chuyển và tạo nhánh mới ở local từ nhánh hiện tại: 
+    - $ git checkout -b [branchName]   
+	
+### Chuyển qua nhánh mới trên origin nhưng dưới local chưa có (thay vì tạo 1 nhánh ở local rồi pull code về)
+    - $ git checkout --track origin/[name_branch]
+	
+### Lưu lại những thay đổi đang làm vào hàng đợi(vd: đang làm nhưng phải chuyển nhánh, nhưng chưa muốn cmit)
+    - $ git stash
+	
+### Lấy lại những thay đổi đang làm từ hàng đợi
+    - $ git stash pop
+	
+### Xóa nhánh dưới local
+	1/ Chuyển sang 1 nhánh khác
+	2/ Xóa nhánh
+    - $ git branch -d <name_branch> (nếu fully merged)
+    - $ git branch -D <name_branch> (nếu not fully merged)
+	
+### Xóa nhánh trên remote
+    - $ git push origin --delete <name_branch>     *(chỉ name ko kèm theo origin)
+	
+### Update những thay đổi từ nhánh khác về nhánh đang làm
+    - $ git merge <name_branch>
+	
+### Check các branch hiện tại trên remote và dưới local
+	- $ git branch -a
+	
+### Đổi tên một nhánh trên remote
+	1/ Chuyển sang nhánh cần đổi tên ở local
+		$ git checkout -b example
+	2/ Đổi tên nhánh
+		$ git branch -m example_renamed
+	3/ Push tên mới và xóa tên cũ trên remote
+		$ git push origin :example example_renamed
+	4/ Cập nhật track (theo dõi) cho tên mới của giữa local và remote
+		$ git push origin -u example_renamed
+		
+### Quay về trước đó một commit và push khi lỡ push commit sai lên
+	- $ git reset --hard HEAD^
+	  hoặc
+	- $ git reset --hard HEAD~1 (nếu quay về 2 commit: HEAD~2)
+	  hoặc
+	- $ git reset --hard <commit-id>
+	
+	- $ git add .
+	- $ git commit -m""
+	- $ git push -f origin <branch> (ép remote sẽ theo local)
+	
+### add hết thây đổi nhưng chừa 1 file nào đó lại
+	- $ git add -u
+	- $ git reset -- <file>
+	
+### Config username email
+	- $ git config user.name "test"
+	- $ git config user.email test@test.com
+
+### Quy trình rebase
+	VD: dev là nhánh chính A là nhánh con
+	-Ta đang làm việc trên nhánh A và done task.
+	1. Push code nhánh A lên (tránh quá trình rebase lỗi thì code A ko mất)
+		- git add .
+		- git commit -m".."
+		- git push
+	2. Kéo code từ dev về (có 2 cách)
+		2.1 Ta checkout qua nhánh dev và pull code về
+			- git checkout dev
+			- git pull --rebase
+			- git checkout A
+			- git rebase dev
+		2.2 Ta đứng tại A và pull code từ dev về
+			- git pull origin dev --rebase
+	3. Fix conflict cho từng commit (ko commit chỉ add)
+		3.1 Fix conflict a,b,c,.... và save file a,b,c,...
+		3.2 git add a b c ...
+		3.3 git rebase --continue
+		3.4 Tới commit tiếp theo, nếu ko có conflict thì ta next
+			- git rebase --skip
+		3.4 Tới commit tiếp theo nếu vẫn còn conflict thì tiếp tục quay lại bước 3.1
+	4. Khi fix xong hết tất cả commit ta push code
+		- git push -f
+	
+	* Trong quá trình rebase nếu có lỗi hay vấn đề gì khá, ta có thể hủy rebase, nếu ko chắc abort quay về trạng thái ban đầu
+	thì có thể xóa nhánh A dưới local rồi pull về lại nhánh A đã push ở bước 1
+		- git rebase --abort
+		
+### .gitignore not working (Thay đổi file ignore nhưng không hoạt động do cache)
+	$ git rm -rf --cached .
+	$ git add .
+	
+### Đăng nhập một lần vào git trên ubutun
+	$ git config credential.helper store
+	$ git push http://example.com/repo.git
+	Username: <type your username>
+	Password: <type your password>
+	
+### Xem log trên cmd
+- Xem chi tiết thay đổi
+	$ git log -p
+
+- Kèm theo thanh đồ thị
+	$ git log --graph
