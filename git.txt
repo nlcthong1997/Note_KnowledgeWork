@@ -94,6 +94,14 @@
 	$ git rm -rf --cached .
 	$ git add .
 	
+### undo added file
+	$ git reset
+	or
+	$ git reset <file>
+	
+### undo all modify
+	$ git checkout .
+	
 ### Đăng nhập một lần vào git trên ubutun
 	$ git config credential.helper store
 	$ git push http://example.com/repo.git
