@@ -1,0 +1,32 @@
+Tạo nhiều git account connect trên window
+
+- Tạo key public account
+ + ssh-keygen -t rsa -b 4096 -C "email-account-1" -f  ~/.ssh/<id_rsa_git_personal>
+ + ssh-keygen -t rsa -b 4096 -C "email-account-2" -f  ~/.ssh/<id_rsa_git_work>
+ 
+- Thêm ssh key vào GitHub
+ + ssh-add ~/.ssh/<id_rsa_git_personal>
+ + ssh-add ~/.ssh/<id_rsa_git_work>
+ 
+- Tạo file "config" trong thư mục "User/<...>/.shh/" và thêm vào nội dung
+	Host github.com-<personal>
+	  HostName github.com
+	  User git
+	  IdentityFile ~/.ssh/<id_rsa_git_personal>
+	  
+	Host github.com-<work>
+	  HostName github.com
+	  User git
+	  IdentityFile ~/.ssh/<id_rsa_git_work>
+	  
+	  
+- Sử dụng
+ + Khi clone dùng ssh: 
+	git clone git@github.com-<host>:<username>/2024_Microservice.git
+	Vd:
+		git clone git@github.com-personal:<username>/2024_Microservice.git
+		git clone git@github.com-work:<username>/2024_Microservice.git
+		
+ + Nếu bạn đang sử dụng URL HTTPS, hãy chuyển đổi sang URL SSH để sử dụng khóa SSH: 
+	git remote set-url origin git@github.com-<hostNameCustom>:<username>/repository.git
+ 
