@@ -53,7 +53,7 @@
 	- $ git commit -m""
 	- $ git push -f origin <branch> (ép remote sẽ theo local)
 	
-### add hết thây đổi nhưng chừa 1 file nào đó lại
+### add hết thay đổi nhưng chừa 1 file nào đó lại
 	- $ git add -u
 	- $ git reset -- <file>
 	
