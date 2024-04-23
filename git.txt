@@ -34,7 +34,7 @@
 	
 ### Đổi tên một nhánh trên remote
 	1/ Chuyển sang nhánh cần đổi tên ở local
-		$ git checkout -b example
+		$ git checkout example
 	2/ Đổi tên nhánh
 		$ git branch -m example_renamed
 	3/ Push tên mới và xóa tên cũ trên remote
